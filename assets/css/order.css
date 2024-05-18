@@ -1,4 +1,5 @@
-.order-section {
+.order-section-background {
+  display: flex;
   color: white;
   margin: 10px;
   padding-left: 20px;
@@ -13,6 +14,8 @@
 
 .item-card {
   display: flex;
+  margin-right: 15px;
+  margin-bottom: 15px;
   padding-top: 10px;
   padding-bottom: 5px;
   flex-direction: column;
@@ -32,6 +35,13 @@
   color: white;
   margin: 10px;
   align-self: flex-start;
+}
+
+.order-items {
+  display: flex;
+  flex-wrap: wrap;
+  width: 800px;
+  flex-direction: row;
 }
 
 .item-card h2 {
@@ -55,4 +65,54 @@
   font-style: normal;
   font-size: 13px;
   color: #919298;
+}
+
+.title-customerButton-container {
+  display: flex;
+  flex-direction: row;
+  width: 400px;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.customer-button {
+  width: 150px;
+  height: 50px;
+  background-color: #1f2029; /* Add this line */
+  color: #b1b2b7;
+  border: none;
+  border-radius: 10px;
+  font-family: "Roboto", sans-serif;
+  font-weight: 600;
+  font-style: normal;
+  font-size: 15px;
+  transition: background-color 0.3s ease; /* Add this line for a smooth transition */
+}
+
+.customer-button:hover {
+  background-color: #f05756; /* Add this block for the hover effect */
+  color: white;
+}
+
+.customer-select-container {
+  margin-bottom: 20px;
+}
+
+.customer-select {
+  font-family: "Roboto", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+  font-size: 15px;
+  background-color: #1f2029;
+  color: white;
+  width: 50%;
+  padding: 10px;
+  border-radius: 5px;
+  font-size: 16px;
+  border: none;
+}
+
+.customer-select:focus {
+  outline: none;
 }
