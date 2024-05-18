@@ -1,6 +1,7 @@
 .order-section-background {
   display: flex;
   flex-direction: row;
+  justify-content: space-between;
   color: white;
   margin: 10px;
   padding-left: 20px;
