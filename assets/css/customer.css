@@ -1,7 +1,6 @@
 .customer-section-background {
   display: flex;
-  flex-direction: row;
-  justify-content: space-between;
+  flex-direction: column;
   color: white;
   margin: 10px;
   padding-left: 20px;
@@ -13,4 +12,31 @@
 
 .date {
   color: #919298;
+}
+
+.customer-table {
+  width: 100%;
+  border-collapse: separate; 
+  border-spacing: 0;
+  margin-top: 20px;
+  color: #d8d8d8;
+}
+
+.customer-table th,
+.customer-table td {
+  padding: 10px;
+  border: 1px solid #919298;
+  text-align: center;
+}
+
+.customer-table thead th:first-child {
+  border-top-left-radius: 10px;
+}
+
+.customer-table th:last-child {
+  border-top-right-radius: 10px;
+}
+
+.customer-table th {
+  background-color: #1f2029;
 }

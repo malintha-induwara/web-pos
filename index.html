@@ -168,8 +168,24 @@
     <section id="customer-page" class="customer-section-background">
       <div class="customer-section">
         <h2 class="order-title">Customer</h2>
-        <h4 class="date">May 21, 2024</h4>
       </div>
+      <table class="customer-table">
+        <thead>
+          <tr>
+            <th>Product name</th>
+            <th>Product ID</th>
+            <th>Category</th>
+            <th>Incoming</th>
+            <th>Reserved</th>
+            <th>Quantity</th>
+            <th>Price</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody id="inventory-table">
+          <!-- JavaScript will inject rows here -->
+        </tbody>
+      </table>
     </section>
 
     <script src="/controller/navigation.js"></script>
