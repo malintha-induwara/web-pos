@@ -1,8 +1,10 @@
 .order-section-background {
   display: flex;
+  flex-direction: row;
   color: white;
   margin: 10px;
   padding-left: 20px;
+  padding-right: 20px;
   background-color: #17181f;
   width: 100%;
   border-radius: 10px;
@@ -40,7 +42,6 @@
 .order-items {
   display: flex;
   flex-wrap: wrap;
-  width: 800px;
   flex-direction: row;
 }
 
@@ -106,7 +107,7 @@
   font-size: 15px;
   background-color: #1f2029;
   color: white;
-  width: 50%;
+  width: 200px;
   padding: 10px;
   border-radius: 5px;
   font-size: 16px;
@@ -115,4 +116,47 @@
 
 .customer-select:focus {
   outline: none;
+}
+
+.order-item-cart {
+  right: 20px;
+  top: 20px;
+  width: 360px;
+  background-color: #1f2029;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.order-item-cart h2 {
+  margin-top: 0;
+}
+
+.order-total {
+  margin-top: 20px;
+}
+
+.order-total p {
+  margin: 5px 0;
+  display: flex;
+  justify-content: space-between;
+}
+
+button#print-bills {
+  margin-top: 20px;
+  width: 100%;
+  padding: 10px;
+  background-color: #ff4757;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  border-radius: 8px;
+  font-family: "Roboto", sans-serif;
+  font-weight: 600;
+  font-style: normal;
+  font-size: 15px;
+}
+
+button#print-bills:hover {
+  background-color: #ff4545;
 }
