@@ -60,3 +60,9 @@ body {
 .nav-button:hover h4 {
   color: white;
 }
+
+/* Page Visibility */
+
+#customer-page {
+  display: none;
+}

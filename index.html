@@ -6,6 +6,7 @@
     <title>Document</title>
     <link rel="stylesheet" href="/assets/css/body.css" />
     <link rel="stylesheet" href="/assets/css/order.css" />
+    <link rel="stylesheet" href="/assets/css/customer.css" />
   </head>
   <body>
     <!-- Nav Bar -->
@@ -25,7 +26,7 @@
           <h4 class="nav-button-text">Home</h4>
         </button>
 
-        <button class="nav-button">
+        <button id="order-button" class="nav-button">
           <img
             src="/assets/images/icons8-menu-50.png"
             class="nav-button-img"
@@ -34,7 +35,7 @@
           <h4 class="nav-button-text">Order</h4>
         </button>
 
-        <button class="nav-button">
+        <button id="customer-button" class="nav-button">
           <img
             src="/assets/images/icons8-customer-50.png"
             class="nav-button-img"
@@ -56,8 +57,8 @@
 
     <!-- Order Section -->
 
-    <section class="order-section-background">
-      <div class="item-section">
+    <section id="order-page" class="order-section-background">
+      <div class="order-section">
         <h2 class="order-title">SYREX Restrurent</h2>
         <h4 class="date">May 21, 2024</h4>
         <div class="order-items">
@@ -163,5 +164,14 @@
         </div>
       </div>
     </section>
+
+    <section id="customer-page" class="customer-section-background">
+      <div class="customer-section">
+        <h2 class="order-title">Customer</h2>
+        <h4 class="date">May 21, 2024</h4>
+      </div>
+    </section>
+
+    <script src="/controller/navigation.js"></script>
   </body>
 </html>
