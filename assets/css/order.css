@@ -4,8 +4,7 @@
   justify-content: space-between;
   color: white;
   margin: 10px;
-  padding-left: 20px;
-  padding-right: 20px;
+  padding: 1rem;
   background-color: #17181f;
   width: 100%;
   border-radius: 10px;
@@ -17,8 +16,8 @@
 
 .item-card {
   display: flex;
-  margin-right: 15px;
-  margin-bottom: 15px;
+  /* margin-right: 15px;
+  margin-bottom: 15px; */
   padding-top: 10px;
   padding-bottom: 5px;
   flex-direction: column;
@@ -44,6 +43,7 @@
   display: flex;
   flex-wrap: wrap;
   flex-direction: row;
+  gap: 1rem;
 }
 
 .item-card h2 {
@@ -128,6 +128,8 @@
   border-radius: 8px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
+
+
 
 .order-item-cart h2 {
   margin-top: 0;

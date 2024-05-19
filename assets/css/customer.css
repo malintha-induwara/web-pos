@@ -3,11 +3,17 @@
   flex-direction: column;
   color: white;
   margin: 10px;
-  padding-left: 20px;
-  padding-right: 20px;
+  padding: 1rem;
   background-color: #17181f;
   width: 100%;
   border-radius: 10px;
+}
+
+.customer-section{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .date {
@@ -16,7 +22,7 @@
 
 .customer-table {
   width: 100%;
-  border-collapse: separate; 
+  border-collapse: separate;
   border-spacing: 0;
   margin-top: 20px;
   color: #d8d8d8;
@@ -25,7 +31,7 @@
 .customer-table th,
 .customer-table td {
   padding: 10px;
-  border: 1px solid #919298;
+  border: 1px solid #4b4c4d;
   text-align: center;
 }
 
@@ -39,4 +45,23 @@
 
 .customer-table th {
   background-color: #1f2029;
+}
+
+.customer-button {
+  width: 150px;
+  height: 50px;
+  background-color: #1f2029; /* Add this line */
+  color: #b1b2b7;
+  border: none;
+  border-radius: 10px;
+  font-family: "Roboto", sans-serif;
+  font-weight: 600;
+  font-style: normal;
+  font-size: 15px;
+  transition: background-color 0.3s ease; /* Add this line for a smooth transition */
+}
+
+.customer-button:hover {
+  background-color: #f05756; /* Add this block for the hover effect */
+  color: white;
 }
