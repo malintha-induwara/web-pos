@@ -16,8 +16,6 @@
 
 .item-card {
   display: flex;
-  /* margin-right: 15px;
-  margin-bottom: 15px; */
   padding-top: 10px;
   padding-bottom: 5px;
   flex-direction: column;
