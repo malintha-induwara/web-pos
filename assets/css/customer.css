@@ -66,8 +66,8 @@
   color: white;
 }
 
-.modal {
-  display: block;
+.add-customer-modal {
+  display: none;
   position: fixed;
   z-index: 1;
   left: 0;

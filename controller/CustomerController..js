@@ -1,8 +1,18 @@
-const addCustomerModel = document.getElementById("addCustomerModel");
-const addCustomerForm = document.getElementById("addCustomerForm");
+const addCustomerModel = document.getElementById("add-customer-modal");
+const addCustomerForm = document.getElementById("add-customer-form");
 
-const openAddModal = () => {
+const openAddCustomerModal = () => {
   addCustomerModel.style.display = "block";
 };
 
-document.getElementById("add-customer").addEventListener("click", openAddModal);
+const closeAddCustomerModal = () => {
+  addCustomerModel.style.display = "none";
+};
+
+document
+  .getElementById("add-customer")
+  .addEventListener("click", openAddCustomerModal);
+
+document
+  .getElementById("add-customer-modal-close")
+  .addEventListener("click", closeAddCustomerModal);
