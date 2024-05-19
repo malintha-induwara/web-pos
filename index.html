@@ -176,11 +176,11 @@
         <thead>
           <tr>
             <th>Customer ID</th>
-            <th>Customer Name</th>
+            <th>First Name</th>
+            <th>Last Name</th>
             <th>Date of Birth</th>
             <th>Address</th>
-            <th>Reserved</th>
-            <th>Quantity</th>
+            <th>Mobile</th>
             <th>Update</th>
             <th>Remove</th>
           </tr>
@@ -189,6 +189,29 @@
           <!-- JavaScript will inject rows here -->
         </tbody>
       </table>
+
+      <!-- Add Product Modal -->
+      <div id="add-customer-modal" class="modal">
+        <div class="modal-content">
+          <span class="close">&times;</span>
+          <h2>Add Customer</h2>
+          <form id="add-customer-form">
+            <label for="customerID">Customer ID:</label>
+            <input type="text" id="customerID" name="customerID" required />
+            <label for="firstName">First Name:</label>
+            <input type="text" id="firstName" name="firstName" required />
+            <label for="lastName">Last Name:</label>
+            <input type="text" id="lastName" name="lastName" required />
+            <label for="dob">Date Of Birth:</label>
+            <input type="date" id="dob" name="dob" required />
+            <label for="address">Address:</label>
+            <input type="text" id="address" name="address" required />
+            <label for="mobile">Mobile:</label>
+            <input type="tel" id="mobile" name="mobile" required />
+            <button type="submit">Add Customer</button>
+          </form>
+        </div>
+      </div>
     </section>
 
     <script src="/controller/navigation.js"></script>
