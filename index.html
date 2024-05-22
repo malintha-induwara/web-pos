@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="/assets/css/body.css" />
     <link rel="stylesheet" href="/assets/css/order.css" />
     <link rel="stylesheet" href="/assets/css/customer.css" />
+    <link rel="stylesheet" href="/assets/css/item.css" />
   </head>
   <body>
     <!-- Nav Bar -->
@@ -44,7 +45,7 @@
           <h4 class="nav-button-text">Customer</h4>
         </button>
 
-        <button class="nav-button">
+        <button id="item-button" class="nav-button">
           <img
             src="/assets/images/icons8-item-50.png"
             class="nav-button-img"
@@ -169,7 +170,7 @@
 
     <section id="customer-page" class="customer-section-background">
       <div class="customer-section">
-        <h2 class="order-title">Customer</h2>
+        <h2 class="order-title">Customer Manage</h2>
         <button id="add-customer" class="customer-button">Add Customer</button>
       </div>
       <table class="customer-table">
@@ -185,7 +186,7 @@
             <th>Remove</th>
           </tr>
         </thead>
-        <tbody id="inventory-table">
+        <tbody id="customer-table-list">
           <!-- JavaScript will inject rows here -->
         </tbody>
       </table>
@@ -226,7 +227,33 @@
       </div>
     </section>
 
-    <script src="/controller/navigation.js"></script>
-    <script src="/controller/CustomerController..js"></script>
+    <!-- Item Page -->
+    <section id="item-page" class="item-section-background">
+      <div class="item-section">
+        <h2 class="order-title">Item Inventory</h2>
+        <button id="add-item" class="item-button">Add Item</button>
+      </div>
+      <table class="item-table">
+        <thead>
+          <tr>
+            <th>Item ID</th>
+            <th>View</th>
+            <th>Item Name</th>
+            <th>Price</th>
+            <th>Quantity</th>
+            <th>Category</th>
+            <th>Update</th>
+            <th>Remove</th>
+          </tr>
+        </thead>
+        <tbody id="item-table-list">
+          <!-- JavaScript will inject rows here -->
+        </tbody>
+      </table>
+    </section>
+
+    <script src="/controller/Navigation.js"></script>
+    <script src="/controller/CustomerController.js"></script>
+    <script src="/controller/ItemController.js"></script>
   </body>
 </html>

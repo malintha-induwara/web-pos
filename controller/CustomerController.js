@@ -46,6 +46,10 @@ const openCustomerModal = () => {
   customerModel.style.display = "block";
 };
 
+// Update Mode Switch
+let isUpdateMode = false;
+let currentCustomerId = null;
+
 const closeCustomerModal = () => {
   customerModel.style.display = "none";
   customerForm.reset();
@@ -62,16 +66,12 @@ document
   .getElementById("customer-modal-close")
   .addEventListener("click", closeCustomerModal);
 
-// Update Mode Switch
-let isUpdateMode = false;
-let currentCustomerId = null;
-
 // Load Customers
 const loadCustomersIntoTable = () => {
-  const inventoryTable = document.getElementById("inventory-table");
+  const customerTableList = document.getElementById("customer-table-list");
 
   customerList.forEach((customer) => {
-    addCustomerToTable(customer, inventoryTable);
+    addCustomerToTable(customer, customerTableList);
   });
 };
 
@@ -143,7 +143,7 @@ customerForm.addEventListener("submit", (event) => {
     customerMobile: document.getElementById("mobile").value,
   };
 
-  const inventoryTable = document.getElementById("inventory-table");
+  const customerTableList = document.getElementById("customer-table-list");
 
   if (isUpdateMode) {
     // Update existing customer
@@ -153,14 +153,14 @@ customerForm.addEventListener("submit", (event) => {
     customerList[customerIndex] = customerData;
 
     // Clear the table and reload all customers
-    inventoryTable.innerHTML = "";
+    customerTableList.innerHTML = "";
     loadCustomersIntoTable();
   } else {
     // Add new customer to customerList array
     customerList.push(customerData);
 
     // Add new customer to the table
-    addCustomerToTable(customerData, inventoryTable);
+    addCustomerToTable(customerData, customerTableList);
   }
 
   // Close the modal and reset the form
