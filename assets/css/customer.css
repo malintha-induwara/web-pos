@@ -66,7 +66,7 @@
   color: white;
 }
 
-.add-customer-modal {
+.customer-modal {
   display: none;
   position: fixed;
   z-index: 1;
@@ -79,7 +79,7 @@
   background-color: rgba(0, 0, 0, 0.4);
 }
 
-.modal-content {
+.customer-modal-content {
   border-radius: 10px;
   background-color: #17181f;
   margin: 5% auto;
@@ -87,38 +87,38 @@
   width: 35%;
 }
 
-.close {
+.customer-close {
   color: #aaa;
   float: right;
   font-size: 28px;
   font-weight: bold;
 }
 
-.close:hover,
-.close:focus {
+.customer-close:hover,
+.customer-close:focus {
   color: black;
   text-decoration: none;
   cursor: pointer;
 }
 
-.add-customer-form {
+.customer-form {
   display: flex;
   flex-direction: column;
 }
 
 /* Form styles */
-.add-customer-form label {
+.customer-form label {
   display: block;
   margin: 10px 0 5px;
 }
 
-.add-customer-form input {
+.customer-form input {
   width: 100%;
   padding: 10px;
   margin: 5px 0;
   box-sizing: border-box;
 }
-.add-customer-form button {
+.customer-form button {
   color: white;
   border: none;
   border-radius: 5px;
@@ -133,17 +133,17 @@
   align-self: center;
   box-sizing: border-box;
 }
-.add-customer-form button:hover {
+.customer-form button:hover {
   background-color: #e67979;
 }
 
-.form-row {
+.customer-form-row {
   display: flex;
   justify-content: space-between;
   margin: 5px;
 }
 
-.form-row label {
+.customer-form-row label {
   font-family: "Roboto", sans-serif;
   font-weight: 400;
   font-style: normal;
@@ -151,7 +151,7 @@
   width: 30%;
 }
 
-.form-row input {
+.customer-form-row input {
   font-family: "Roboto", sans-serif;
   font-weight: 300;
   font-style: normal;
@@ -162,6 +162,6 @@
   border: none;
   border-radius: 5px;
 }
-.form-row input:focus {
+.customer-form-row input:focus {
   outline: 2px solid #f05756;
 }

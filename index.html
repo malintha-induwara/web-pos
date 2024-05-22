@@ -192,32 +192,32 @@
       </table>
 
       <!-- Customer Modal -->
-      <div id="customer-modal" class="add-customer-modal">
-        <div class="modal-content">
-          <span id="customer-modal-close" class="close">&times;</span>
+      <div id="customer-modal" class="customer-modal">
+        <div class="customer-modal-content">
+          <span id="customer-modal-close" class="customer-close">&times;</span>
           <h2>Add Customer</h2>
-          <form id="customer-form" class="add-customer-form">
-            <div class="form-row">
+          <form id="customer-form" class="customer-form">
+            <div class="customer-form-row">
               <label for="customerID">Customer ID:</label>
               <input type="text" id="customerID" name="customerID" required />
             </div>
-            <div class="form-row">
+            <div class="customer-form-row">
               <label for="firstName">First Name:</label>
               <input type="text" id="firstName" name="firstName" required />
             </div>
-            <div class="form-row">
+            <div class="customer-form-row">
               <label for="lastName">Last Name:</label>
               <input type="text" id="lastName" name="lastName" required />
             </div>
-            <div class="form-row">
+            <div class="customer-form-row">
               <label for="dob">Date Of Birth:</label>
               <input type="date" id="dob" name="dob" required />
             </div>
-            <div class="form-row">
+            <div class="customer-form-row">
               <label for="address">Address:</label>
               <input type="text" id="address" name="address" required />
             </div>
-            <div class="form-row">
+            <div class="customer-form-row">
               <label for="mobile">Mobile:</label>
               <input type="tel" id="mobile" name="mobile" required />
             </div>
@@ -250,6 +250,43 @@
           <!-- JavaScript will inject rows here -->
         </tbody>
       </table>
+      <script src="/controller/"></script>
+
+      <!-- Item Model -->
+
+      <div id="item-modal" class="item-modal">
+        <div class="item-modal-content">
+          <span id="item-modal-close" class="item-close">&times;</span>
+          <h2>Add Item</h2>
+          <form id="item-form" class="item-form">
+            <div class="item-form-row">
+              <label for="customerID">Item ID:</label>
+              <input type="text" id="customerID" name="customerID" required />
+            </div>
+            <div class="item-form-row">
+              <label for="firstName">First Name:</label>
+              <input type="text" id="firstName" name="firstName" required />
+            </div>
+            <div class="item-form-row">
+              <label for="lastName">Last Name:</label>
+              <input type="text" id="lastName" name="lastName" required />
+            </div>
+            <div class="item-form-row">
+              <label for="dob">Date Of Birth:</label>
+              <input type="date" id="dob" name="dob" required />
+            </div>
+            <div class="item-form-row">
+              <label for="address">Address:</label>
+              <input type="text" id="address" name="address" required />
+            </div>
+            <div class="item-form-row">
+              <label for="mobile">Mobile:</label>
+              <input type="tel" id="mobile" name="mobile" required />
+            </div>
+            <button id="item-submit" type="submit">Add Customer</button>
+          </form>
+        </div>
+      </div>
     </section>
 
     <script src="/controller/Navigation.js"></script>
