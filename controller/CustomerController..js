@@ -35,33 +35,36 @@ let customerList = [
 ];
 
 // Controller Code
-const addCustomerModel = document.getElementById("add-customer-modal");
-const addCustomerForm = document.getElementById("add-customer-form");
-const addCustomerButton = addCustomerForm.querySelector(
-  "button[type='submit']"
-);
-let isUpdateMode = false;
-let currentCustomerId = null;
 
-const openAddCustomerModal = () => {
-  addCustomerModel.style.display = "block";
+//Select the Elements
+const customerModel = document.getElementById("customer-modal");
+const customerForm = document.getElementById("customer-form");
+const customerButton = document.getElementById("customer-submit");
+
+//Set up event listeners
+const openCustomerModal = () => {
+  customerModel.style.display = "block";
 };
 
-const closeAddCustomerModal = () => {
-  addCustomerModel.style.display = "none";
-  addCustomerForm.reset();
-  addCustomerButton.textContent = "Add Customer"; // Reset button text
+const closeCustomerModal = () => {
+  customerModel.style.display = "none";
+  customerForm.reset();
+  customerButton.textContent = "Add Customer"; // Reset button text
   isUpdateMode = false;
   currentCustomerId = null;
 };
 
 document
   .getElementById("add-customer")
-  .addEventListener("click", openAddCustomerModal);
+  .addEventListener("click", openCustomerModal);
 
 document
-  .getElementById("add-customer-modal-close")
-  .addEventListener("click", closeAddCustomerModal);
+  .getElementById("customer-modal-close")
+  .addEventListener("click", closeCustomerModal);
+
+// Update Mode Switch
+let isUpdateMode = false;
+let currentCustomerId = null;
 
 // Load Customers
 const loadCustomersIntoTable = () => {
@@ -88,11 +91,11 @@ const addCustomerToTable = (customer, table) => {
   updateButton.textContent = "Update";
   updateButton.addEventListener("click", () => {
     // Add your update logic here
-    openAddCustomerModal();
+    openCustomerModal();
     fillFormWithCustomerData(customer);
     isUpdateMode = true;
     currentCustomerId = customer.customerId;
-    addCustomerButton.textContent = "Update Customer"; // Change button text
+    customerButton.textContent = "Update Customer"; // Change button text
   });
   updateCell.appendChild(updateButton);
   row.appendChild(updateCell);
@@ -127,7 +130,7 @@ const fillFormWithCustomerData = (customer) => {
 };
 
 // Handle form submission to add or update customer
-addCustomerForm.addEventListener("submit", (event) => {
+customerForm.addEventListener("submit", (event) => {
   event.preventDefault(); // Prevent form from submitting the traditional way
 
   // Create new customer object from form data
@@ -161,8 +164,8 @@ addCustomerForm.addEventListener("submit", (event) => {
   }
 
   // Close the modal and reset the form
-  closeAddCustomerModal();
-  addCustomerForm.reset();
+  closeCustomerModal();
+  customerForm.reset();
 });
 
 // Ensure the DOM is fully loaded before executing
