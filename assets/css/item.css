@@ -29,7 +29,7 @@
 }
 
 .item-table th,
-.customer-table td {
+.item-table td {
   padding: 10px;
   border: 1px solid #4b4c4d;
   text-align: center;
@@ -186,4 +186,11 @@
 
 .item-form-row input:focus {
   outline: 2px solid #f05756;
+}
+
+.item-image {
+  width: 100px;
+  height: auto;
+  border-radius: 5px; /* Example styling */
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.3); /* Example styling */
 }
