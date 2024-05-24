@@ -140,6 +140,7 @@ const addItemToTable = (item, table) => {
   const updateCell = document.createElement("td");
   const updateButton = document.createElement("button");
   updateButton.textContent = "Update";
+  updateButton.className = "action-button";
   updateButton.addEventListener("click", () => {
     // Add your update logic here
     openItemModal();
@@ -155,6 +156,7 @@ const addItemToTable = (item, table) => {
   const removeCell = document.createElement("td");
   const removeButton = document.createElement("button");
   removeButton.textContent = "Remove";
+  removeButton.className = "action-button";
   removeButton.addEventListener("click", () => {
     // Add your remove logic here
     console.log(`Remove item ${item.itemId}`);

@@ -66,3 +66,17 @@ body {
 #customer-page {
   display: none;
 }
+
+
+.action-button {
+  width: 100px;
+  height: 35px;
+  background-color: #f05756; /* Add this line */
+  color: white;
+  border: none;
+  border-radius: 5px;
+  font-family: "Roboto", sans-serif;
+  font-weight: 500;
+  font-style: normal;
+  font-size: 15px;
+}
