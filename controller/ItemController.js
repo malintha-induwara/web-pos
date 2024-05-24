@@ -37,18 +37,15 @@ async function getBase64Image(url) {
 }
 
 async function saveImagesToLocalStorage(itemList) {
-  let imageObject = {};
   for (const item of itemList) {
-    imageObject[item.itemId] = await getBase64Image(item.itemImage);
+    let imgDetails = await getBase64Image(item.itemImage);
+    localStorage.setItem(item.itemId, JSON.stringify(imgDetails));
   }
-  localStorage.setItem("images", JSON.stringify(imageObject));
 }
 
 function getImageFromLocalStorage(itemId) {
-  const images = JSON.parse(localStorage.getItem('images'));
-  return images[itemId];
+  return JSON.parse(localStorage.getItem(itemId));
 }
-
 
 saveImagesToLocalStorage(itemList);
 
@@ -67,6 +64,7 @@ imageInput.onchange = function () {
 
   reader.onload = function (e) {
     var img = document.createElement("img");
+    img.id = "item-image-id";
     img.src = e.target.result;
     img.style.width = "100px"; // Or any other size you want
     img.style.height = "100px"; // Or any other size you want
@@ -88,6 +86,10 @@ const itemButton = document.getElementById("item-submit");
 
 const openItemModal = () => {
   itemModel.style.display = "block";
+
+  if (!isItemUpdateMode) {
+    imageInputDiv.innerHTML = "";
+  }
 };
 
 let isItemUpdateMode = false;
@@ -97,7 +99,7 @@ const closeItemModal = () => {
   itemModel.style.display = "none";
   itemForm.reset();
   itemButton.textContent = "Add Item";
-  isUpdateMode = false;
+  isItemUpdateMode = false;
   currentItemId = null;
 };
 
@@ -142,7 +144,7 @@ const addItemToTable = (item, table) => {
     // Add your update logic here
     openItemModal();
     fillFormWithItemData(item);
-    isUpdateMode = true;
+    isItemUpdateMode = true;
     currentItemId = item.itemId;
     itemButton.textContent = "Update Item"; // Change button text
   });
@@ -175,12 +177,50 @@ const fillFormWithItemData = (item) => {
 
   //   Add The Image
   var img = document.createElement("img");
-  img.src = item.itemImage;
+  img.id = "item-image-id";
+  let imageBase64 = getImageFromLocalStorage(item.itemId);
+  img.src = imageBase64;
   img.style.width = "100px"; // Or any other size you want
   img.style.height = "100px"; // Or any other size you want
   // Clear the div and add the new image
   imageInputDiv.innerHTML = "";
   imageInputDiv.appendChild(img);
 };
+
+itemForm.addEventListener("submit", (event) => {
+  event.preventDefault();
+
+  const itemData = {
+    itemId: document.getElementById("itemId").value,
+    itemName: document.getElementById("itemName").value,
+    itemPrice: document.getElementById("itemPrice").value,
+    itemQty: document.getElementById("itemQty").value,
+    category: document.getElementById("category").value,
+  };
+
+  const itemTableList = document.getElementById("item-table-list");
+
+  if (isItemUpdateMode) {
+    const itemIndex = itemList.findIndex((i) => i.itemId === currentItemId);
+    itemList[itemIndex] = itemData;
+
+    let newImage = document.getElementById("item-image-id");
+    let imageBase64 = newImage.src;
+    localStorage.setItem(itemData.itemId, JSON.stringify(imageBase64));
+    itemTableList.innerHTML = "";
+
+    //Remove The image child
+    loadItemsIntoTable();
+  } else {
+    let newImage = document.getElementById("item-image-id");
+    let imageBase64 = newImage.src;
+    localStorage.setItem(itemData.itemId, JSON.stringify(imageBase64));
+    itemList.push(itemData);
+    addItemToTable(itemData, itemTableList);
+  }
+
+  closeItemModal();
+  itemForm.reset();
+});
 
 document.addEventListener("DOMContentLoaded", loadItemsIntoTable);
