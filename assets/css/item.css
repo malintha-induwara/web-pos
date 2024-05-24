@@ -82,7 +82,7 @@
 .item-modal-content {
   border-radius: 10px;
   background-color: #17181f;
-  margin: 5% auto;
+  margin: 4% auto;
   padding: 30px;
   width: 35%;
 }
@@ -143,6 +143,27 @@
   margin: 5px;
 }
 
+.item-form-row-image {
+  display: flex;
+  gap: 25px;
+  margin: 5px;
+}
+
+.image-input {
+  border: 2px solid #f05756;
+  width: 100px;
+  height: 100px;
+  cursor: pointer;
+}
+
+.item-form-row-image label {
+  font-family: "Roboto", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+  font-size: 17px;
+  width: 30%;
+}
+
 .item-form-row label {
   font-family: "Roboto", sans-serif;
   font-weight: 400;
@@ -162,6 +183,7 @@
   border: none;
   border-radius: 5px;
 }
+
 .item-form-row input:focus {
   outline: 2px solid #f05756;
 }
