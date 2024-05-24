@@ -1,45 +1,56 @@
 let itemList = [
   {
     itemId: "I001",
-    itemImage: "/assets/images/foodItems/burger.jpg",
     itemName: "Burger",
     itemPrice: "100",
     itemQty: "10",
     category: "Food",
+    itemImage: "/assets/images/foodItems/burger.jpg",
   },
   {
     itemId: "I002",
-    itemImage: "/assets/images/foodItems/pizza.jpg",
     itemName: "Pizza",
     itemPrice: "150",
     itemQty: "10",
     category: "Food",
+    itemImage: "/assets/images/foodItems/pizza.jpg",
   },
   {
     itemId: "I003",
-    itemImage: "/assets/images/foodItems/chikenWIngs.jpg",
     itemName: "Chiken Wings",
     itemPrice: "80",
     itemQty: "10",
     category: "Food",
-  },
-  {
-    itemId: "I004",
     itemImage: "/assets/images/foodItems/rice.jpg",
-    itemName: "Rice",
-    itemPrice: "120",
-    itemQty: "10",
-    category: "Food",
-  },
-  {
-    itemId: "I005",
-    itemImage: "/assets/images/foodItems/seaFood.jpg",
-    itemName: "Sea Food",
-    itemPrice: "50",
-    itemQty: "10",
-    category: "Food",
   },
 ];
+
+async function getBase64Image(url) {
+  const response = await fetch(url);
+  const blob = await response.blob();
+  const reader = new FileReader();
+  return new Promise((resolve, reject) => {
+    reader.onloadend = () => resolve(reader.result);
+    reader.onerror = reject;
+    reader.readAsDataURL(blob);
+  });
+}
+
+async function saveImagesToLocalStorage(itemList) {
+  let imageObject = {};
+  for (const item of itemList) {
+    imageObject[item.itemId] = await getBase64Image(item.itemImage);
+  }
+  localStorage.setItem("images", JSON.stringify(imageObject));
+}
+
+function getImageFromLocalStorage(itemId) {
+  const images = JSON.parse(localStorage.getItem('images'));
+  return images[itemId];
+}
+
+
+saveImagesToLocalStorage(itemList);
 
 // ----------Image input------------
 
@@ -117,7 +128,8 @@ const addItemToTable = (item, table) => {
 
   const imageCell = document.createElement("td");
   const image = document.createElement("img");
-  image.src = item.itemImage;
+  let imageBase64 = getImageFromLocalStorage(item.itemId);
+  image.src = imageBase64;
   image.className = "item-image";
   imageCell.appendChild(image);
   row.appendChild(imageCell);
@@ -129,7 +141,7 @@ const addItemToTable = (item, table) => {
   updateButton.addEventListener("click", () => {
     // Add your update logic here
     openItemModal();
-    // fillFormWithItemData(item);
+    fillFormWithItemData(item);
     isUpdateMode = true;
     currentItemId = item.itemId;
     itemButton.textContent = "Update Item"; // Change button text
@@ -153,4 +165,22 @@ const addItemToTable = (item, table) => {
   // Append the row to the table
   table.appendChild(row);
 };
+
+const fillFormWithItemData = (item) => {
+  document.getElementById("itemId").value = item.itemId;
+  document.getElementById("itemName").value = item.itemName;
+  document.getElementById("itemPrice").value = item.itemPrice;
+  document.getElementById("itemQty").value = item.itemQty;
+  document.getElementById("category").value = item.category;
+
+  //   Add The Image
+  var img = document.createElement("img");
+  img.src = item.itemImage;
+  img.style.width = "100px"; // Or any other size you want
+  img.style.height = "100px"; // Or any other size you want
+  // Clear the div and add the new image
+  imageInputDiv.innerHTML = "";
+  imageInputDiv.appendChild(img);
+};
+
 document.addEventListener("DOMContentLoaded", loadItemsIntoTable);
