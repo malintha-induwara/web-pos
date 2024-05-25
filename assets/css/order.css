@@ -96,9 +96,17 @@
 }
 
 .customer-select-container {
+  display: flex;
   margin-bottom: 20px;
 }
 
+#name-holder{
+  font-family: "Roboto", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+  font-size: 17px;
+  margin-left: 10%;
+}
 .customer-select {
   font-family: "Roboto", sans-serif;
   font-weight: 400;

@@ -61,80 +61,8 @@
     <section id="order-page" class="order-section-background">
       <div class="order-section">
         <h2 class="order-title">SYREX Restrurent</h2>
-        <h4 class="date">May 21, 2024</h4>
-        <div class="order-items">
-          <div class="item-card">
-            <img
-              src="/assets/images/foodItems/burger.jpg"
-              width="160px"
-              alt="burger"
-            />
-            <h4 class="item-name">Orginal Burger</h4>
-            <div class="item-info">
-              <h2 class="item-price">$150</h2>
-              <span class="item-count">11 Items</span>
-            </div>
-          </div>
-          <div class="item-card">
-            <img
-              src="/assets/images/foodItems/burger.jpg"
-              width="160px"
-              alt="burger"
-            />
-            <h4 class="item-name">Orginal Burger</h4>
-            <div class="item-info">
-              <h2 class="item-price">$150</h2>
-              <span class="item-count">11 Items</span>
-            </div>
-          </div>
-          <div class="item-card">
-            <img
-              src="/assets/images/foodItems/burger.jpg"
-              width="160px"
-              alt="burger"
-            />
-            <h4 class="item-name">Orginal Burger</h4>
-            <div class="item-info">
-              <h2 class="item-price">$150</h2>
-              <span class="item-count">11 Items</span>
-            </div>
-          </div>
-          <div class="item-card">
-            <img
-              src="/assets/images/foodItems/burger.jpg"
-              width="160px"
-              alt="burger"
-            />
-            <h4 class="item-name">Orginal Burger</h4>
-            <div class="item-info">
-              <h2 class="item-price">$150</h2>
-              <span class="item-count">11 Items</span>
-            </div>
-          </div>
-          <div class="item-card">
-            <img
-              src="/assets/images/foodItems/burger.jpg"
-              width="160px"
-              alt="burger"
-            />
-            <h4 class="item-name">Orginal Burger</h4>
-            <div class="item-info">
-              <h2 class="item-price">$150</h2>
-              <span class="item-count">11 Items</span>
-            </div>
-          </div>
-          <div class="item-card">
-            <img
-              src="/assets/images/foodItems/burger.jpg"
-              width="160px"
-              alt="burger"
-            />
-            <h4 class="item-name">Orginal Burger</h4>
-            <div class="item-info">
-              <h2 class="item-price">$150</h2>
-              <span class="item-count">11 Items</span>
-            </div>
-          </div>
+        <h4 id="current-date" class="date">May 21, 2024</h4>
+        <div class="order-items" id="order-items">
         </div>
       </div>
 
@@ -143,13 +71,12 @@
           <h2 class="order-title">Order</h2>
           <button class="customer-button">Add Customer</button>
         </div>
+        <h3 id="order-id">Order ID: 1</h3>
         <div class="customer-select-container">
-          <select class="customer-select">
+          <select id="customerDropDown" class="customer-select">
             <option value="">Select Customer</option>
-            <option value="customer1">Customer 1</option>
-            <option value="customer2">Customer 2</option>
-            <option value="customer3">Customer 3</option>
           </select>
+          <p id="name-holder">Name:</p>
         </div>
 
         <div class="order-item-cart">
@@ -277,21 +204,12 @@
             </div>
             <div class="item-form-row">
               <label for="itemCategory">Category:</label>
-              <input
-                type="text"
-                id="category"
-                name="itemCategory"
-                required
-              />
+              <input type="text" id="category" name="itemCategory" required />
             </div>
             <div class="item-form-row-image">
               <label for="image">Image:</label>
               <div class="image-input"></div>
-              <input
-                type="file"
-                id="input-image"
-                style="display: none"
-              />
+              <input type="file" id="input-image" style="display: none" />
             </div>
             <button id="item-submit" type="submit">Add Item</button>
           </form>
@@ -303,5 +221,6 @@
     <script src="/controller/Navigation.js"></script>
     <script src="/controller/CustomerController.js"></script>
     <script src="/controller/ItemController.js"></script>
+    <script src="/controller/OrderController.js"></script>
   </body>
 </html>
