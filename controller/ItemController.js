@@ -1,30 +1,4 @@
-let itemList = [
-  {
-    itemId: "I001",
-    itemName: "Burger",
-    itemPrice: "100",
-    itemQty: "10",
-    category: "Food",
-    itemImage: "/assets/images/foodItems/burger.jpg",
-  },
-  {
-    itemId: "I002",
-    itemName: "Pizza",
-    itemPrice: "150",
-    itemQty: "10",
-    category: "Food",
-    itemImage: "/assets/images/foodItems/pizza.jpg",
-  },
-  {
-    itemId: "I003",
-    itemName: "Chiken Wings",
-    itemPrice: "80",
-    itemQty: "10",
-    category: "Food",
-    itemImage: "/assets/images/foodItems/rice.jpg",
-  },
-];
-
+//Base 64 Image Convertion
 async function getBase64Image(url) {
   const response = await fetch(url);
   const blob = await response.blob();
