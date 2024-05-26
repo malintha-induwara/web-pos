@@ -8,6 +8,14 @@ document.getElementById("current-date").textContent = formattedDate;
 function populateCustomerDropdown() {
   const customerSelect = document.getElementById("customerDropDown");
   customerSelect.innerHTML = "";
+
+  // Add the "Select Customer" option
+  let defaultOption = document.createElement("option");
+  defaultOption.value = "";
+  defaultOption.text = "Select Customer";
+  customerSelect.appendChild(defaultOption);
+
+  // Add the customer options
   customerList.forEach((customer) => {
     let option = document.createElement("option");
     option.value = customer.customerId;
@@ -15,7 +23,6 @@ function populateCustomerDropdown() {
     customerSelect.appendChild(option);
   });
 }
-
 // Add an event listener
 document
   .getElementById("customerDropDown")
