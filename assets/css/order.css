@@ -24,6 +24,7 @@
   width: 180px;
   background-color: #1f2029;
   border-radius: 10px;
+  cursor: pointer;
 }
 
 .item-card img {
@@ -100,7 +101,7 @@
   margin-bottom: 20px;
 }
 
-#name-holder{
+#name-holder {
   font-family: "Roboto", sans-serif;
   font-weight: 400;
   font-style: normal;
@@ -135,8 +136,6 @@
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
-
-
 .order-item-cart h2 {
   margin-top: 0;
 }
@@ -151,7 +150,7 @@
   justify-content: space-between;
 }
 
-button#print-bills {
+#place-order {
   margin-top: 20px;
   width: 100%;
   padding: 10px;
@@ -166,6 +165,25 @@ button#print-bills {
   font-size: 15px;
 }
 
-button#print-bills:hover {
+#place-order:hover {
   background-color: #ff4545;
+}
+
+.cart-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 2px;
+}
+
+.remove-button-cart {
+  font-size: 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  background-color: transparent;
+}
+
+.cart-item-name{
+  width: 150px;
 }
