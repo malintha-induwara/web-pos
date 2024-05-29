@@ -1,4 +1,3 @@
-
 // Set date
 let date = new Date();
 let options = { year: "numeric", month: "long", day: "numeric" };
@@ -24,6 +23,7 @@ function populateCustomerDropdown() {
     customerSelect.appendChild(option);
   });
 }
+
 // Add an event listener
 document
   .getElementById("customerDropDown")
@@ -155,19 +155,42 @@ function updateCartDisplay() {
     cartItemsContainer.appendChild(cartItemDiv);
   });
 
-  const tax = subTotal * 0.1;
-  const total = subTotal + tax;
+  const discount = parseFloat(document.getElementById("discount").value) || 0;
+  const cash = parseFloat(document.getElementById("cash").value) || 0;
+  const total = subTotal - discount;
+  const balance = cash - total;
 
   document.getElementById("sub-total").textContent = `$${subTotal.toFixed(2)}`;
-  document.getElementById("tax").textContent = `$${tax.toFixed(2)}`;
   document.getElementById("total").textContent = `$${total.toFixed(2)}`;
+  document.getElementById("balance").textContent = `$${balance.toFixed(2)}`;
 }
+
+// Add event listeners to update the cart display when cash or discount inputs change
+document.getElementById("cash").addEventListener("input", updateCartDisplay);
+document
+  .getElementById("discount")
+  .addEventListener("input", updateCartDisplay);
 
 document.getElementById("place-order").addEventListener("click", placeOrder);
 
 function placeOrder() {
+  const cashInput = document.getElementById("cash").value;
+  const balance = parseFloat(
+    document.getElementById("balance").textContent.slice(1)
+  );
+
   if (cart.length === 0) {
     alert("No items in the cart.");
+    return;
+  }
+
+  if (!cashInput) {
+    alert("Cash input is required.");
+    return;
+  }
+
+  if (balance < 0) {
+    alert("Insufficient cash provided.");
     return;
   }
 
@@ -178,15 +201,23 @@ function placeOrder() {
     subTotal: parseFloat(
       document.getElementById("sub-total").textContent.slice(1)
     ),
-    tax: parseFloat(document.getElementById("tax").textContent.slice(1)),
+    discount: parseFloat(document.getElementById("discount").value) || 0,
     total: parseFloat(document.getElementById("total").textContent.slice(1)),
+    cash: parseFloat(document.getElementById("cash").value) || 0,
+    balance: parseFloat(
+      document.getElementById("balance").textContent.slice(1)
+    ),
   };
 
   console.log("Order Placed:", orderDetails);
   alert("Order placed successfully!");
 
   cart.length = 0; // Clear the cart
+  document.getElementById("cash").value = ""; // Clear the cash input
+  document.getElementById("discount").value = ""; // Clear the discount input
   updateCartDisplay(); // Update the display
 }
 
 // Initialize the dropdown and items
+populateCustomerDropdown();
+populateOrderItems();

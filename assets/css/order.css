@@ -188,3 +188,45 @@
 .cart-item-name{
   width: 150px;
 }
+
+
+.order-row{
+  margin-top: 0.5rem;
+  
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+.order-row div{
+  display: flex;
+  flex-direction: column;
+}
+
+.order-row label{
+  font-family: "Roboto", sans-serif;
+  font-weight: 600;
+  font-style: normal;
+  font-size: 17px;
+  width: 30%;
+  color: #c5c5c7;
+  margin-top: 5px;
+}
+
+.order-row input{
+  width: 10rem;
+  height: 2rem;
+  margin-top: 5px;
+  padding-left: 10px;
+  font-family: "Roboto", sans-serif;
+  font-weight: 300;
+  font-style: normal;
+  font-size: 15px;
+  color: white;
+  background-color: #252631;
+  border: none;
+  border-radius: 5px;
+}
+
+.order-row input:focus {
+  outline: 2px solid #f05756;
+}
