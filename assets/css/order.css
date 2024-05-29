@@ -1,5 +1,5 @@
 .order-section-background {
-  display: flex;
+  display: none;
   flex-direction: row;
   justify-content: space-between;
   color: white;
