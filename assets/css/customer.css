@@ -96,7 +96,7 @@
 
 .customer-close:hover,
 .customer-close:focus {
-  color: black;
+  color: #f05756;
   text-decoration: none;
   cursor: pointer;
 }
