@@ -178,6 +178,7 @@ function placeOrder() {
 
   const customer = document.getElementById("customerDropDown").value;
 
+
   const balance = parseFloat(
     document.getElementById("balance").textContent.slice(1)
   );
@@ -205,7 +206,7 @@ function placeOrder() {
 
   const orderDetails = {
     orderId: document.getElementById("order-id").textContent,
-    customer: document.getElementById("customerDropDown").value,
+    customer: customer,
     items: cart,
     subTotal: parseFloat(
       document.getElementById("sub-total").textContent.slice(1)
