@@ -9,7 +9,7 @@ function populateCustomerDropdown() {
   const customerSelect = document.getElementById("customerDropDown");
   customerSelect.innerHTML = "";
 
-  // Add the "Select Customer" option
+
   let defaultOption = document.createElement("option");
   defaultOption.value = "";
   defaultOption.text = "Select Customer";
@@ -175,9 +175,18 @@ document.getElementById("place-order").addEventListener("click", placeOrder);
 
 function placeOrder() {
   const cashInput = document.getElementById("cash").value;
+
+  const customer = document.getElementById("customerDropDown").value;
+
   const balance = parseFloat(
     document.getElementById("balance").textContent.slice(1)
   );
+
+  
+  if (customer ==="") {
+    alert("Customer is required.");
+    return;
+  }
 
   if (cart.length === 0) {
     alert("No items in the cart.");
@@ -211,6 +220,16 @@ function placeOrder() {
 
   console.log("Order Placed:", orderDetails);
   alert("Order placed successfully!");
+
+
+  //Update the Order ID
+
+  let orderId = document.getElementById("order-id");
+  let currentOrderId = parseInt(orderId.textContent.split(": ")[1]);
+  currentOrderId++;
+  orderId.textContent = "Order ID: " + currentOrderId;
+
+
 
   cart.length = 0; // Clear the cart
   document.getElementById("cash").value = ""; // Clear the cash input
