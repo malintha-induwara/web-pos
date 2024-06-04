@@ -1,10 +1,17 @@
 class Customer {
-    constructor(id,firstName,lastName,dob,address,mobile){
-        this.id = id;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.dob = dob;
-        this.address = address;
-        this.mobile = mobile;
-    }
+  constructor(
+    customerId,
+    customerFirstName,
+    customerLastName,
+    customerDateOfBirth,
+    customerAddress,
+    customerMobile
+  ) {
+    this.customerId = customerId;
+    this.customerFirstName = customerFirstName;
+    this.customerLastName = customerLastName;
+    this.customerDateOfBirth = customerDateOfBirth;
+    this.customerAddress = customerAddress;
+    this.customerMobile = customerMobile;
+  }
 }
