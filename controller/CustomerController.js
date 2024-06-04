@@ -136,14 +136,25 @@ customerForm.addEventListener("submit", (event) => {
   }
 
   // Create new customer object from form data
-  const customerData = {
+  const customerData = new Customer(
     customerId,
-    customerFirstName: firstName,
-    customerLastName: lastName,
-    customerDateOfBirth: dob,
-    customerAddress: address,
-    customerMobile: mobile,
-  };
+    firstName,
+    lastName,
+    dob,
+    address,
+    mobile
+  );
+
+// Alternative way
+
+  // {
+  //   customerId,
+  //   customerFirstName: firstName,
+  //   customerLastName: lastName,
+  //   customerDateOfBirth: dob,
+  //   customerAddress: address,
+  //   customerMobile: mobile,
+  // };
 
   const customerTableList = document.getElementById("customer-table-list");
 

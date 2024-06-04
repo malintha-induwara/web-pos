@@ -65,7 +65,7 @@ function populateOrderItems() {
 
     const itemPrice = document.createElement("h2");
     itemPrice.className = "item-price";
-    itemPrice.textContent = `$${item.itemPrice}`;
+    itemPrice.textContent = `Rs${item.itemPrice}`;
 
     const itemCount = document.createElement("span");
     itemCount.className = "item-count";
@@ -138,7 +138,7 @@ function updateCartDisplay() {
 
     const cartItemPrice = document.createElement("p");
     const itemTotalPrice = cartItem.itemPrice * cartItem.quantity;
-    cartItemPrice.textContent = `$${itemTotalPrice.toFixed(2)}`;
+    cartItemPrice.textContent = `Rs${itemTotalPrice.toFixed(2)}`;
 
     const removeButton = document.createElement("button");
     removeButton.textContent = "⛔";
@@ -160,9 +160,9 @@ function updateCartDisplay() {
   const total = subTotal - discount;
   const balance = cash - total;
 
-  document.getElementById("sub-total").textContent = `$${subTotal.toFixed(2)}`;
-  document.getElementById("total").textContent = `$${total.toFixed(2)}`;
-  document.getElementById("balance").textContent = `$${balance.toFixed(2)}`;
+  document.getElementById("sub-total").textContent = `Rs${subTotal.toFixed(2)}`;
+  document.getElementById("total").textContent = `Rs${total.toFixed(2)}`;
+  document.getElementById("balance").textContent = `Rs${balance.toFixed(2)}`;
 }
 
 // Add event listeners to update the cart display when cash or discount inputs change
