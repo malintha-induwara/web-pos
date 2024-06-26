@@ -1,37 +1,38 @@
 let customerList = [
   {
     customerId: "C001",
-    customerFirstName: "John",
-    customerLastName: "Doe",
+    customerFirstName: "Saman",
+    customerLastName: "Perera",
     customerDateOfBirth: "1990-01-01",
-    customerAddress: "Galle",
-    customerMobile: "0712345678",
+    customerAddress: "Colombo",
+    customerMobile: "0723323232",
   },
   {
     customerId: "C002",
-    customerFirstName: "John",
-    customerLastName: "Doe",
+    customerFirstName: "Sunil",
+    customerLastName: "Perera",
     customerDateOfBirth: "1990-01-01",
-    customerAddress: "Galle",
-    customerMobile: "0712345678",
+    customerAddress: "Kandy",
+    customerMobile: "0754322134",
   },
   {
     customerId: "C003",
     customerFirstName: "John",
-    customerLastName: "Doe",
+    customerLastName: "Lakshitha",
     customerDateOfBirth: "1990-01-01",
     customerAddress: "Galle",
-    customerMobile: "0712345678",
+    customerMobile: "0742234587",
   },
   {
     customerId: "C004",
-    customerFirstName: "John",
-    customerLastName: "Doe",
+    customerFirstName: "Minoli",
+    customerLastName: "Perera",
     customerDateOfBirth: "1990-01-01",
     customerAddress: "Galle",
     customerMobile: "0712345678",
   },
 ];
+
 
 
 let itemList = [

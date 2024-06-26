@@ -113,7 +113,7 @@ const addItemToTable = (item, table) => {
   updateButton.textContent = "Update";
   updateButton.className = "action-button";
   updateButton.addEventListener("click", () => {
-    // Add your update logic here
+    
     openItemModal();
     fillFormWithItemData(item);
     isItemUpdateMode = true;
@@ -123,13 +123,14 @@ const addItemToTable = (item, table) => {
   updateCell.appendChild(updateButton);
   row.appendChild(updateCell);
 
+
   // Create 'Remove' button
   const removeCell = document.createElement("td");
   const removeButton = document.createElement("button");
   removeButton.textContent = "Remove";
   removeButton.className = "action-button";
   removeButton.addEventListener("click", () => {
-    // Add your remove logic here
+    
     console.log(`Remove item ${item.itemId}`);
     table.removeChild(row);
     itemList = itemList.filter((i) => i.itemId !== item.itemId);

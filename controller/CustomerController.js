@@ -55,7 +55,7 @@ const addCustomerToTable = (customer, table) => {
   updateButton.textContent = "Update";
   updateButton.className = "action-button";
   updateButton.addEventListener("click", () => {
-    // Add your update logic here
+    
     openCustomerModal();
     fillFormWithCustomerData(customer);
     isUpdateMode = true;
@@ -71,7 +71,7 @@ const addCustomerToTable = (customer, table) => {
   removeButton.textContent = "Remove";
   removeButton.className = "action-button";
   removeButton.addEventListener("click", () => {
-    // Add your remove logic here
+    
     console.log(`Remove customer ${customer.customerId}`);
     table.removeChild(row);
     customerList = customerList.filter(
