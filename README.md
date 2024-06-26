@@ -1,7 +1,7 @@
 # Web POS - Restaurants Management System.
 * This web-based POS (Point of Sale) system is designed for restaurants to streamline their operations and enhance customer service. With a modern and intuitive user interface, it offers a seamless experience for managing customers, items, and orders.
 
-### User Interfaces
+## User Interfaces
 
 ![1](https://github.com/malintha-induwara/web-pos/assets/60071404/459f214c-771d-4c24-b436-d22fac4a4789)
 
@@ -15,14 +15,14 @@
 
 
 
-### Features
+## Features
 
 * **Add Customer:** Easily add and manage customer information.
 * **Add Items:** Add menu items with images to create a visually appealing menu.
 * **Place Orders:** Simplify the ordering process with a user-friendly order placement system.
 * **Modern UI:** Enjoy a sleek and responsive design that works well on various devices.
 
-### Built with
+## Built with
 * HTML
 * CSS
 * Javascript
