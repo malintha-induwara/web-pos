@@ -233,9 +233,9 @@ function placeOrder() {
 
 
   cart.length = 0; // Clear the cart
-  document.getElementById("cash").value = ""; // Clear the cash input
-  document.getElementById("discount").value = ""; // Clear the discount input
-  updateCartDisplay(); // Update the display
+  document.getElementById("cash").value = ""; 
+  document.getElementById("discount").value = ""; 
+  updateCartDisplay(); 
 }
 
 // Initialize the dropdown and items

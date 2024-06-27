@@ -39,8 +39,8 @@ imageInput.onchange = function () {
     var img = document.createElement("img");
     img.id = "item-image-id";
     img.src = e.target.result;
-    img.style.width = "100px"; // Or any other size you want
-    img.style.height = "100px"; // Or any other size you want
+    img.style.width = "100px"; 
+    img.style.height = "100px"; 
 
     // Clear the div and add the new image
     imageInputDiv.innerHTML = "";
@@ -118,7 +118,7 @@ const addItemToTable = (item, table) => {
     fillFormWithItemData(item);
     isItemUpdateMode = true;
     currentItemId = item.itemId;
-    itemButton.textContent = "Update Item"; // Change button text
+    itemButton.textContent = "Update Item";
   });
   updateCell.appendChild(updateButton);
   row.appendChild(updateCell);
@@ -154,8 +154,8 @@ const fillFormWithItemData = (item) => {
   img.id = "item-image-id";
   let imageBase64 = getImageFromLocalStorage(item.itemId);
   img.src = imageBase64;
-  img.style.width = "100px"; // Or any other size you want
-  img.style.height = "100px"; // Or any other size you want
+  img.style.width = "100px"; 
+  img.style.height = "100px"; 
   // Clear the div and add the new image
   imageInputDiv.innerHTML = "";
   imageInputDiv.appendChild(img);

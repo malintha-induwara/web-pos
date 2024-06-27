@@ -50,7 +50,7 @@
 .customer-button {
   width: 150px;
   height: 50px;
-  background-color: #1f2029; /* Add this line */
+  background-color: #1f2029; 
   color: #b1b2b7;
   border: none;
   border-radius: 10px;
@@ -58,11 +58,11 @@
   font-weight: 600;
   font-style: normal;
   font-size: 15px;
-  transition: background-color 0.3s ease; /* Add this line for a smooth transition */
+  transition: background-color 0.3s ease;
 }
 
 .customer-button:hover {
-  background-color: #f05756; /* Add this block for the hover effect */
+  background-color: #f05756; 
   color: white;
 }
 

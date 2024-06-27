@@ -11,8 +11,8 @@
   background-color: #17181f;
   width: 100%;
   border-radius: 10px;
-  background-image: url("/assets/images/homeBackground.png"); /* Add this line */
-  background-size: cover; /* Add this line if you want the image to cover the entire element */
+  background-image: url("/assets/images/homeBackground.png"); 
+  background-size: cover; 
   background-position: center;
 }
 

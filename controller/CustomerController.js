@@ -17,7 +17,7 @@ let currentCustomerId = null;
 const closeCustomerModal = () => {
   customerModel.style.display = "none";
   customerForm.reset();
-  customerButton.textContent = "Add Customer"; // Reset button text
+  customerButton.textContent = "Add Customer"; 
   isUpdateMode = false;
   currentCustomerId = null;
 };
@@ -60,7 +60,7 @@ const addCustomerToTable = (customer, table) => {
     fillFormWithCustomerData(customer);
     isUpdateMode = true;
     currentCustomerId = customer.customerId;
-    customerButton.textContent = "Update Customer"; // Change button text
+    customerButton.textContent = "Update Customer";
   });
   updateCell.appendChild(updateButton);
   row.appendChild(updateCell);
@@ -81,7 +81,7 @@ const addCustomerToTable = (customer, table) => {
   removeCell.appendChild(removeButton);
   row.appendChild(removeCell);
 
-  // Append the row to the table
+
   table.appendChild(row);
 };
 
@@ -103,7 +103,7 @@ const validateAddress = (address) => address.trim() !== "";
 
 // Handle form submission to add or update customer
 customerForm.addEventListener("submit", (event) => {
-  event.preventDefault(); // Prevent form from submitting the traditional way
+  event.preventDefault();
 
   // Get form data
   const customerId = document.getElementById("customerID").value;
@@ -176,10 +176,10 @@ customerForm.addEventListener("submit", (event) => {
     addCustomerToTable(customerData, customerTableList);
   }
 
-  // Close the modal and reset the form
+
   closeCustomerModal();
   customerForm.reset();
 });
 
-// Ensure the DOM is fully loaded before executing
+
 document.addEventListener("DOMContentLoaded", loadCustomersIntoTable);

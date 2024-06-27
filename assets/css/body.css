@@ -41,11 +41,11 @@ body {
   justify-content: center;
   align-items: center;
   margin: 5px;
-  background-color: transparent; /* Add this line */
+  background-color: transparent;
   border: none;
   border-radius: 10px;
   font-size: 16px;
-  transition: background-color 0.3s ease; /* Add this line for a smooth transition */
+  transition: background-color 0.3s ease; 
 }
 
 .nav-button-text {
@@ -54,7 +54,7 @@ body {
 }
 
 .nav-button:hover {
-  background-color: #f05756; /* Add this block for the hover effect */
+  background-color: #f05756;
   color: white;
 }
 
@@ -72,7 +72,7 @@ body {
 .action-button {
   width: 100px;
   height: 35px;
-  background-color: #f05756; /* Add this line */
+  background-color: #f05756; 
   color: white;
   border: none;
   border-radius: 5px;
