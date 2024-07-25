@@ -1,1 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
+
+<Context>
+    <Resource name="jdbc/TestDB" auth="Container" type="javax.sql.DataSource"
+              maxTotal="10" maxIdle="8" maxWaitMillis="-1"
+              username="root" password="Syrex@1234" driverClassName="com.mysql.cj.jdbc.Driver"
+              url="jdbc:mysql://localhost:3306/webPos"/>
+</Context>
