@@ -4,8 +4,6 @@
          xsi:schemaLocation="https://jakarta.ee/xml/ns/jakartaee https://jakarta.ee/xml/ns/jakartaee/web-app_6_0.xsd"
          version="6.0">
 
-
-
     <resource-ref>
         <description>Oracle Datasource example</description>
         <res-ref-name>jdbc/webPos</res-ref-name>
