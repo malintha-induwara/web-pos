@@ -3,7 +3,6 @@ package lk.ijse.webpos.backend.dao.custom.impl;
 import lk.ijse.webpos.backend.dao.custom.OrderDAO;
 import lk.ijse.webpos.backend.entity.Order;
 
-import java.sql.Connection;
 import java.util.ArrayList;
 
 public class OrderDAOImpl implements OrderDAO {

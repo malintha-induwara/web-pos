@@ -6,7 +6,6 @@ import lk.ijse.webpos.backend.dao.custom.CustomerDAO;
 import lk.ijse.webpos.backend.dto.CustomerDTO;
 import lk.ijse.webpos.backend.entity.Customer;
 
-import java.sql.Connection;
 import java.sql.SQLException;
 
 public class CustomerBOImpl implements CustomerBO {

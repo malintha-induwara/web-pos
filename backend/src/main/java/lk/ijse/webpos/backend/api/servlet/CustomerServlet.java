@@ -2,8 +2,6 @@ package lk.ijse.webpos.backend.api.servlet;
 
 import jakarta.json.bind.Jsonb;
 import jakarta.json.bind.JsonbBuilder;
-import jakarta.servlet.ServletConfig;
-import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
@@ -12,9 +10,6 @@ import lk.ijse.webpos.backend.bo.BOFactory;
 import lk.ijse.webpos.backend.bo.custom.CustomerBO;
 import lk.ijse.webpos.backend.dto.CustomerDTO;
 
-import javax.naming.InitialContext;
-import javax.naming.NamingException;
-import javax.sql.DataSource;
 import java.io.IOException;
 import java.sql.SQLException;
 
@@ -29,24 +24,24 @@ public class CustomerServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
 
-        if(req.getContentType() == null || !req.getContentType().toLowerCase().startsWith("application/json")){
+        if (req.getContentType() == null || !req.getContentType().toLowerCase().startsWith("application/json")) {
             resp.sendError(HttpServletResponse.SC_BAD_REQUEST);
         }
 
-        try (var writer = resp.getWriter()){
+        try (var writer = resp.getWriter()) {
             Jsonb jsonb = JsonbBuilder.create();
             CustomerDTO customer = jsonb.fromJson(req.getReader(), CustomerDTO.class);
 //            customer.setCustomerId("C005");
             //Save data in the DB
             boolean isSaved = customerBO.saveCustomer(customer);
-            if(isSaved){
+            if (isSaved) {
                 resp.setStatus(HttpServletResponse.SC_CREATED);
                 writer.write("Save Student Successfully");
-            }else {
+            } else {
                 resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
                 writer.write("Failed to Save Student");
             }
-        }catch (SQLException e){
+        } catch (SQLException e) {
             resp.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
             e.printStackTrace();
         }

@@ -21,7 +21,7 @@ public class SQLUtil {
 
 
     public static <T> T execute(String sql, Object... args) throws SQLException {
-        try  {
+        try {
             Connection connection = dataSource.getConnection();
             PreparedStatement pstm = connection.prepareStatement(sql);
             for (int i = 0; i < args.length; i++) {
