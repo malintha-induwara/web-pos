@@ -27,21 +27,7 @@ public class CustomerServlet extends HttpServlet {
 
 
     @Override
-    public void init(ServletConfig config) throws ServletException {
-        try {
-          DataSource  dataSource = (DataSource) new InitialContext().lookup("java:comp/env/jdbc/webPos");
-
-          if (dataSource == null){
-              System.out.println("JJJJJJ");
-          }
-
-        } catch (NamingException e) {
-            throw new RuntimeException("Failed to lookup DataSource", e);
-        }
-    }
-
-    @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
 
         if(req.getContentType() == null || !req.getContentType().toLowerCase().startsWith("application/json")){
             resp.sendError(HttpServletResponse.SC_BAD_REQUEST);
@@ -50,7 +36,7 @@ public class CustomerServlet extends HttpServlet {
         try (var writer = resp.getWriter()){
             Jsonb jsonb = JsonbBuilder.create();
             CustomerDTO customer = jsonb.fromJson(req.getReader(), CustomerDTO.class);
-            customer.setCustomerId("C001");
+//            customer.setCustomerId("C005");
             //Save data in the DB
             boolean isSaved = customerBO.saveCustomer(customer);
             if(isSaved){

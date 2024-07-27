@@ -4,6 +4,7 @@ import lk.ijse.webpos.backend.dao.custom.CustomerDAO;
 import lk.ijse.webpos.backend.entity.Customer;
 import lk.ijse.webpos.backend.util.SQLUtil;
 
+import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
