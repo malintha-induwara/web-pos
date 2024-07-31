@@ -4,13 +4,26 @@ import lk.ijse.webpos.backend.dao.custom.CustomerDAO;
 import lk.ijse.webpos.backend.entity.Customer;
 import lk.ijse.webpos.backend.util.SQLUtil;
 
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class CustomerDAOImpl implements CustomerDAO {
     @Override
-    public ArrayList<Customer> getAll() {
-        return null;
+    public ArrayList<Customer> getAll() throws SQLException {
+        ResultSet resultSet = SQLUtil.execute("SELECT * FROM customer");
+        ArrayList<Customer> customers = new ArrayList<>();
+        while (resultSet.next()) {
+            customers.add(new Customer(
+                    resultSet.getString(1),
+                    resultSet.getString(2),
+                    resultSet.getString(3),
+                    resultSet.getDate(4).toLocalDate(),
+                    resultSet.getString(5),
+                    resultSet.getString(6)
+            ));
+        }
+        return customers;
     }
 
     @Override
@@ -38,7 +51,7 @@ public class CustomerDAOImpl implements CustomerDAO {
 
     @Override
     public boolean delete(String id) throws SQLException {
-        return SQLUtil.execute("DELETE FROM customer WHERE customerId=?",id);
+        return SQLUtil.execute("DELETE FROM customer WHERE customerId=?", id);
     }
 
     @Override

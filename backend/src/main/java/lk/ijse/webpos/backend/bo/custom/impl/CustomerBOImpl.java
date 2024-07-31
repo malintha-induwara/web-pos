@@ -7,6 +7,7 @@ import lk.ijse.webpos.backend.dto.CustomerDTO;
 import lk.ijse.webpos.backend.entity.Customer;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 public class CustomerBOImpl implements CustomerBO {
 
@@ -40,6 +41,23 @@ public class CustomerBOImpl implements CustomerBO {
                         customerDTO.getAddress(),
                         customerDTO.getMobile()
                 ));
+    }
+
+    @Override
+    public ArrayList<CustomerDTO> getAllCustomers() throws SQLException {
+        ArrayList<Customer> allCustomers = customerDAO.getAll();
+        ArrayList<CustomerDTO> allCustomersDTO = new ArrayList<>();
+        for (Customer customer : allCustomers) {
+            allCustomersDTO.add(new CustomerDTO(
+                    customer.getCustomerId(),
+                    customer.getFirstName(),
+                    customer.getLastName(),
+                    customer.getDob(),
+                    customer.getAddress(),
+                    customer.getMobile()
+            ));
+        }
+        return allCustomersDTO;
     }
 }
 
