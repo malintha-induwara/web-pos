@@ -33,7 +33,7 @@ document
 
 // Load Customers
 const loadCustomersIntoTable =async () => {
-  await loadCustomersFromBackend();
+  let customerList= await loadCustomersFromBackend();
   customerTableList.innerHTML = "";
   customerList.forEach((customer) => {
     addCustomerToTable(customer, customerTableList);
@@ -47,7 +47,7 @@ const loadCustomersFromBackend= async ()=>{
       throw new Error(`HTTP error! status: ${response.status}`);
     }
     const data = await response.json();
-    customerList = data; // Assign the fetched data to customerList
+    return data; 
   } catch (error) {
     console.error('Error fetching customers:', error);
   }
