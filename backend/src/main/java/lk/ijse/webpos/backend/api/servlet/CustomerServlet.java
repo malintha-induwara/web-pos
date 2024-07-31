@@ -2,7 +2,6 @@ package lk.ijse.webpos.backend.api.servlet;
 
 import jakarta.json.bind.Jsonb;
 import jakarta.json.bind.JsonbBuilder;
-import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
@@ -48,7 +47,7 @@ public class CustomerServlet extends HttpServlet {
     }
 
     @Override
-    protected void doDelete(HttpServletRequest req, HttpServletResponse resp)  {
+    protected void doDelete(HttpServletRequest req, HttpServletResponse resp) {
         try (PrintWriter writer = resp.getWriter()) {
             String customerId = req.getParameter("customerId");
             boolean isDeleted = customerBO.deleteCustomer(customerId);
@@ -66,7 +65,7 @@ public class CustomerServlet extends HttpServlet {
     }
 
     @Override
-    protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+    protected void doPut(HttpServletRequest req, HttpServletResponse resp) {
 
         try (PrintWriter writer = resp.getWriter()) {
             String customerId = req.getParameter("customerId");
@@ -82,7 +81,7 @@ public class CustomerServlet extends HttpServlet {
                 writer.write("Customer Update Failed");
             }
 
-        } catch (SQLException | IOException e){
+        } catch (SQLException | IOException e) {
             resp.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
             e.printStackTrace();
         }
@@ -90,13 +89,13 @@ public class CustomerServlet extends HttpServlet {
 
 
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp){
         try (PrintWriter writer = resp.getWriter()) {
             Jsonb jsonb = JsonbBuilder.create();
             resp.setContentType("application/json");
             jsonb.toJson(customerBO.getAllCustomers(), writer);
-        } catch (SQLException e) {
-            resp.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+        } catch (SQLException | IOException e) {
+            resp.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
             e.printStackTrace();
         }
     }
