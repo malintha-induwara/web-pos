@@ -125,7 +125,7 @@ const validateMobile = (mobile) => /^[0-9]{10}$/.test(mobile);
 const validateAddress = (address) => address.trim() !== "";
 
 // Handle form submission to add or update customer
-customerForm.addEventListener("submit", (event) => {
+customerForm.addEventListener("submit", async (event) => {
   event.preventDefault();
 
   // Get form data
@@ -138,15 +138,11 @@ customerForm.addEventListener("submit", (event) => {
 
   // Validate form data
   if (!validateCustomerId(customerId)) {
-    alert("Customer ID must be in the format 'C00'.");
+    alert("Customer ID must be in the format 'C000'.");
     return;
   }
-  if (!validateName(firstName)) {
-    alert("First name cannot be empty.");
-    return;
-  }
-  if (!validateName(lastName)) {
-    alert("Last name cannot be empty.");
+  if (!validateName(firstName) || !validateName(lastName)) {
+    alert("First name and last name must contain only letters and spaces.");
     return;
   }
   if (!validateMobile(mobile)) {
@@ -168,34 +164,30 @@ customerForm.addEventListener("submit", (event) => {
     mobile,
   };
 
-  // Alternative way
+  try {
+    const response = await fetch('http://localhost:8080/backend/customer', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(customerData),
+    });
 
-  // {
-  //   customerId,
-  //   customerFirstName: firstName,
-  //   customerLastName: lastName,
-  //   customerDateOfBirth: dob,
-  //   customerAddress: address,
-  //   customerMobile: mobile,
-  // };
-
-  if (isUpdateMode) {
-    // Update existing customer
-    const customerIndex = customerList.findIndex(
-      (c) => c.customerId === currentCustomerId
-    );
-    customerList[customerIndex] = customerData;
-
-    // Clear the table and reload all customers
-    loadCustomersIntoTable();
-  } else {
-    // Add new customer to customerList array
-    customerList.push(customerData);
-
-    // Add new customer to the table
-    addCustomerToTable(customerData, customerTableList);
+    if (response.ok) {
+      const result = await response.text();
+      alert(result);
+      
+      // If successful, add the new customer to the table
+      addCustomerToTable(customerData, customerTableList);
+      
+      // Clear the form and close the modal
+      closeCustomerModal();
+    } else {
+      const errorText = await response.text();
+      alert(`Failed to save customer: ${errorText}`);
+    }
+  } catch (error) {
+    console.error('Error:', error);
+    alert('An error occurred while saving the customer.');
   }
-
-  closeCustomerModal();
-  customerForm.reset();
 });
