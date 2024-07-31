@@ -32,34 +32,43 @@ document
   .addEventListener("click", closeCustomerModal);
 
 // Load Customers
-const loadCustomersIntoTable =async () => {
+const loadCustomersIntoTable = async () => {
   await loadCustomersFromBackend();
   customerTableList.innerHTML = "";
   customerList.forEach((customer) => {
+    console.log(customer.customerId);
+
     addCustomerToTable(customer, customerTableList);
   });
 };
 
-const loadCustomersFromBackend= async ()=>{
+const loadCustomersFromBackend = async () => {
   try {
-    const response = await fetch('http://localhost:8080/backend/customer'); // Replace with your actual servlet URL
+    const response = await fetch("http://localhost:8080/backend/customer"); // Replace with your actual servlet URL
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);
     }
     const data = await response.json();
     customerList = data; // Assign the fetched data to customerList
   } catch (error) {
-    console.error('Error fetching customers:', error);
+    console.error("Error fetching customers:", error);
   }
-  
-}
-
+};
 
 const addCustomerToTable = (customer, table) => {
   const row = document.createElement("tr");
 
+  const nameList = [
+    "customerId",
+    "firstName",
+    "lastName",
+    "dob",
+    "address",
+    "mobile",
+  ];
+
   // Create cells for each piece of customer data
-  for (const key in customer) {
+  for (const key of nameList) {
     const cell = document.createElement("td");
     cell.textContent = customer[key];
     row.appendChild(cell);
@@ -68,6 +77,7 @@ const addCustomerToTable = (customer, table) => {
   // Create 'Update' button
   const updateCell = document.createElement("td");
   const updateButton = document.createElement("button");
+
   updateButton.textContent = "Update";
   updateButton.className = "action-button";
   updateButton.addEventListener("click", () => {
@@ -189,4 +199,3 @@ customerForm.addEventListener("submit", (event) => {
   closeCustomerModal();
   customerForm.reset();
 });
-
