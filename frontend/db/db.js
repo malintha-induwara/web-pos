@@ -1,36 +1,36 @@
 let customerList = [
-  {
-    customerId: "C001",
-    customerFirstName: "Saman",
-    customerLastName: "Perera",
-    customerDateOfBirth: "1990-01-01",
-    customerAddress: "Colombo",
-    customerMobile: "0723323232",
-  },
-  {
-    customerId: "C002",
-    customerFirstName: "Sunil",
-    customerLastName: "Perera",
-    customerDateOfBirth: "1990-01-01",
-    customerAddress: "Kandy",
-    customerMobile: "0754322134",
-  },
-  {
-    customerId: "C003",
-    customerFirstName: "John",
-    customerLastName: "Lakshitha",
-    customerDateOfBirth: "1990-01-01",
-    customerAddress: "Galle",
-    customerMobile: "0742234587",
-  },
-  {
-    customerId: "C004",
-    customerFirstName: "Minoli",
-    customerLastName: "Perera",
-    customerDateOfBirth: "1990-01-01",
-    customerAddress: "Galle",
-    customerMobile: "0712345678",
-  },
+  // {
+  //   customerId: "C001",
+  //   customerFirstName: "Saman",
+  //   customerLastName: "Perera",
+  //   customerDateOfBirth: "1990-01-01",
+  //   customerAddress: "Colombo",
+  //   customerMobile: "0723323232",
+  // },
+  // {
+  //   customerId: "C002",
+  //   customerFirstName: "Sunil",
+  //   customerLastName: "Perera",
+  //   customerDateOfBirth: "1990-01-01",
+  //   customerAddress: "Kandy",
+  //   customerMobile: "0754322134",
+  // },
+  // {
+  //   customerId: "C003",
+  //   customerFirstName: "John",
+  //   customerLastName: "Lakshitha",
+  //   customerDateOfBirth: "1990-01-01",
+  //   customerAddress: "Galle",
+  //   customerMobile: "0742234587",
+  // },
+  // {
+  //   customerId: "C004",
+  //   customerFirstName: "Minoli",
+  //   customerLastName: "Perera",
+  //   customerDateOfBirth: "1990-01-01",
+  //   customerAddress: "Galle",
+  //   customerMobile: "0712345678",
+  // },
 ];
 
 
