@@ -12,6 +12,9 @@ document
     document.getElementById("order-page").style.display = "none";
     document.getElementById("customer-page").style.display = "flex";
     document.getElementById("item-page").style.display = "none";
+
+    //Load customers
+    loadCustomersIntoTable();
   });
 
 document.getElementById("order-button").addEventListener("click", function () {

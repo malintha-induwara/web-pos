@@ -4,6 +4,7 @@
 const customerModel = document.getElementById("customer-modal");
 const customerForm = document.getElementById("customer-form");
 const customerButton = document.getElementById("customer-submit");
+const customerTableList = document.getElementById("customer-table-list");
 
 // Set up event listeners
 const openCustomerModal = () => {
@@ -17,7 +18,7 @@ let currentCustomerId = null;
 const closeCustomerModal = () => {
   customerModel.style.display = "none";
   customerForm.reset();
-  customerButton.textContent = "Add Customer"; 
+  customerButton.textContent = "Add Customer";
   isUpdateMode = false;
   currentCustomerId = null;
 };
@@ -32,8 +33,7 @@ document
 
 // Load Customers
 const loadCustomersIntoTable = () => {
-  const customerTableList = document.getElementById("customer-table-list");
-
+  customerTableList.innerHTML = "";
   customerList.forEach((customer) => {
     addCustomerToTable(customer, customerTableList);
   });
@@ -55,7 +55,6 @@ const addCustomerToTable = (customer, table) => {
   updateButton.textContent = "Update";
   updateButton.className = "action-button";
   updateButton.addEventListener("click", () => {
-    
     openCustomerModal();
     fillFormWithCustomerData(customer);
     isUpdateMode = true;
@@ -71,7 +70,6 @@ const addCustomerToTable = (customer, table) => {
   removeButton.textContent = "Remove";
   removeButton.className = "action-button";
   removeButton.addEventListener("click", () => {
-    
     console.log(`Remove customer ${customer.customerId}`);
     table.removeChild(row);
     customerList = customerList.filter(
@@ -80,7 +78,6 @@ const addCustomerToTable = (customer, table) => {
   });
   removeCell.appendChild(removeButton);
   row.appendChild(removeCell);
-
 
   table.appendChild(row);
 };
@@ -136,16 +133,16 @@ customerForm.addEventListener("submit", (event) => {
   }
 
   // Create new customer object from form data
-  const customerData = new Customer(
+  const customerData = {
     customerId,
     firstName,
     lastName,
     dob,
     address,
-    mobile
-  );
+    mobile,
+  };
 
-// Alternative way
+  // Alternative way
 
   // {
   //   customerId,
@@ -156,8 +153,6 @@ customerForm.addEventListener("submit", (event) => {
   //   customerMobile: mobile,
   // };
 
-  const customerTableList = document.getElementById("customer-table-list");
-
   if (isUpdateMode) {
     // Update existing customer
     const customerIndex = customerList.findIndex(
@@ -166,7 +161,6 @@ customerForm.addEventListener("submit", (event) => {
     customerList[customerIndex] = customerData;
 
     // Clear the table and reload all customers
-    customerTableList.innerHTML = "";
     loadCustomersIntoTable();
   } else {
     // Add new customer to customerList array
@@ -176,10 +170,7 @@ customerForm.addEventListener("submit", (event) => {
     addCustomerToTable(customerData, customerTableList);
   }
 
-
   closeCustomerModal();
   customerForm.reset();
 });
 
-
-document.addEventListener("DOMContentLoaded", loadCustomersIntoTable);
