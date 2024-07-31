@@ -2,6 +2,7 @@ package lk.ijse.webpos.backend.api.servlet;
 
 import jakarta.json.bind.Jsonb;
 import jakarta.json.bind.JsonbBuilder;
+import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
@@ -31,21 +32,37 @@ public class CustomerServlet extends HttpServlet {
         try (var writer = resp.getWriter()) {
             Jsonb jsonb = JsonbBuilder.create();
             CustomerDTO customer = jsonb.fromJson(req.getReader(), CustomerDTO.class);
-//            customer.setCustomerId("C005");
             //Save data in the DB
             boolean isSaved = customerBO.saveCustomer(customer);
             if (isSaved) {
                 resp.setStatus(HttpServletResponse.SC_CREATED);
-                writer.write("Save Student Successfully");
+                writer.write("Customer Saved Successfully");
             } else {
                 resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-                writer.write("Failed to Save Student");
+                writer.write("Failed to Save Customer");
             }
         } catch (SQLException e) {
             resp.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
             e.printStackTrace();
         }
+    }
 
+    @Override
+    protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+        try (var writer = resp.getWriter()) {
+            String customerId = req.getParameter("customerId");
+            boolean isDeleted = customerBO.deleteCustomer(customerId);
+            if (isDeleted) {
+                resp.setStatus(HttpServletResponse.SC_CREATED);
+                writer.write("Customer delete Successfully");
+            } else {
+                resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+                writer.write("Failed to delete Customer");
+            }
+        } catch (SQLException e) {
+            resp.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+            e.printStackTrace();
+        }
     }
 }
 

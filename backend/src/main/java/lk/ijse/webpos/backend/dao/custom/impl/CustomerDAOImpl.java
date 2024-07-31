@@ -30,8 +30,8 @@ public class CustomerDAOImpl implements CustomerDAO {
     }
 
     @Override
-    public boolean delete(String id) {
-        return false;
+    public boolean delete(String id) throws SQLException {
+        return SQLUtil.execute("DELETE FROM customer WHERE customerId=?",id);
     }
 
     @Override

@@ -24,5 +24,10 @@ public class CustomerBOImpl implements CustomerBO {
                 customerDTO.getMobile()
         ));
     }
+
+    @Override
+    public boolean deleteCustomer(String customerId) throws SQLException {
+        return customerDAO.delete(customerId);
+    }
 }
 
