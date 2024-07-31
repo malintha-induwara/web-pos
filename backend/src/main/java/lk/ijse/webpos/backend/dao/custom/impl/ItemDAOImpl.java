@@ -18,7 +18,7 @@ public class ItemDAOImpl implements ItemDAO {
 
 
     @Override
-    public boolean update(Item item) {
+    public boolean update(String id, Item item) {
         return false;
     }
 

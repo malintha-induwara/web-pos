@@ -25,8 +25,15 @@ public class CustomerDAOImpl implements CustomerDAO {
     }
 
     @Override
-    public boolean update(Customer customer) {
-        return false;
+    public boolean update(String id, Customer customer) throws SQLException {
+        return SQLUtil.execute("UPDATE customer SET customerId=?, firstName=?,lastName=?,dob=?,address=?,mobile=? WHERE customerId=?",
+                customer.getCustomerId(),
+                customer.getFirstName(),
+                customer.getLastName(),
+                customer.getDob(),
+                customer.getAddress(),
+                customer.getMobile(),
+                id);
     }
 
     @Override
