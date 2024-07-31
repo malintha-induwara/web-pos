@@ -32,12 +32,28 @@ document
   .addEventListener("click", closeCustomerModal);
 
 // Load Customers
-const loadCustomersIntoTable = () => {
+const loadCustomersIntoTable =async () => {
+  await loadCustomersFromBackend();
   customerTableList.innerHTML = "";
   customerList.forEach((customer) => {
     addCustomerToTable(customer, customerTableList);
   });
 };
+
+const loadCustomersFromBackend= async ()=>{
+  try {
+    const response = await fetch('http://localhost:8080/backend/customer'); // Replace with your actual servlet URL
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+    const data = await response.json();
+    customerList = data; // Assign the fetched data to customerList
+  } catch (error) {
+    console.error('Error fetching customers:', error);
+  }
+  
+}
+
 
 const addCustomerToTable = (customer, table) => {
   const row = document.createElement("tr");
