@@ -7,22 +7,26 @@ import lk.ijse.webpos.backend.util.SQLUtil;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 public class CustomerDAOImpl implements CustomerDAO {
     @Override
     public ArrayList<Customer> getAll() throws SQLException {
-        ResultSet resultSet = SQLUtil.execute("SELECT * FROM customer");
+        List<Map<Integer, Object>> resultCopy = SQLUtil.execute("SELECT * FROM customer");
         ArrayList<Customer> customers = new ArrayList<>();
-        while (resultSet.next()) {
+
+        for (Map<Integer, Object> row : resultCopy) {
             customers.add(new Customer(
-                    resultSet.getString(1),
-                    resultSet.getString(2),
-                    resultSet.getString(3),
-                    resultSet.getDate(4).toLocalDate(),
-                    resultSet.getString(5),
-                    resultSet.getString(6)
+                    (String) row.get(1),
+                    (String) row.get(2),
+                    (String) row.get(3),
+                    ((java.sql.Date) row.get(4)).toLocalDate(),
+                    (String) row.get(5),
+                    (String) row.get(6)
             ));
         }
+
         return customers;
     }
 
