@@ -94,16 +94,33 @@ const addCustomerToTable = (customer, table) => {
   const removeButton = document.createElement("button");
   removeButton.textContent = "Remove";
   removeButton.className = "action-button";
-  removeButton.addEventListener("click", () => {
+  removeButton.addEventListener("click", async () => {
     console.log(`Remove customer ${customer.customerId}`);
-    table.removeChild(row);
-    customerList = customerList.filter(
-      (c) => c.customerId !== customer.customerId
-    );
+
+    //Remove customer
+    try {
+      const response = await fetch(
+        `http://localhost:8080/backend/customer?customerId=${customer.customerId}`,
+        {
+          method: "DELETE",
+        }
+      );
+
+      if (response.ok) {
+        table.removeChild(row);
+        customerList = customerList.filter(
+          (c) => c.customerId !== customer.customerId
+        );
+      } else {
+        const errorText = await response.text();
+        console.error("Error removing customer:", errorText);
+      }
+    } catch (error) {
+      console.error("Error removing customer:", error);
+    }
   });
   removeCell.appendChild(removeButton);
   row.appendChild(removeCell);
-
   table.appendChild(row);
 };
 
@@ -162,33 +179,6 @@ customerForm.addEventListener("submit", async (event) => {
     address,
     mobile,
   };
-
-  // try {
-  //   const response = await fetch('http://localhost:8080/backend/customer', {
-  //     method: 'POST',
-  //     headers: {
-  //       'Content-Type': 'application/json',
-  //     },
-  //     body: JSON.stringify(customerData),
-  //   });
-
-  //   if (response.ok) {
-  //     const result = await response.text();
-  //     alert(result);
-
-  //     // If successful, add the new customer to the table
-  //     addCustomerToTable(customerData, customerTableList);
-
-  //     // Clear the form and close the modal
-  //     closeCustomerModal();
-  //   } else {
-  //     const errorText = await response.text();
-  //     alert(`Failed to save customer: ${errorText}`);
-  //   }
-  // } catch (error) {
-  //   console.error('Error:', error);
-  //   alert('An error occurred while saving the customer.');
-  // }
 
   try {
     let url = "http://localhost:8080/backend/customer";
