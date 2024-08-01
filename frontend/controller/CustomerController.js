@@ -36,8 +36,6 @@ const loadCustomersIntoTable = async () => {
   await loadCustomersFromBackend();
   customerTableList.innerHTML = "";
   customerList.forEach((customer) => {
-    console.log(customer.customerId);
-
     addCustomerToTable(customer, customerTableList);
   });
 };
@@ -80,6 +78,7 @@ const addCustomerToTable = (customer, table) => {
 
   updateButton.textContent = "Update";
   updateButton.className = "action-button";
+
   updateButton.addEventListener("click", () => {
     openCustomerModal();
     fillFormWithCustomerData(customer);
@@ -111,11 +110,11 @@ const addCustomerToTable = (customer, table) => {
 // Fill form with customer data
 const fillFormWithCustomerData = (customer) => {
   document.getElementById("customerID").value = customer.customerId;
-  document.getElementById("firstName").value = customer.customerFirstName;
-  document.getElementById("lastName").value = customer.customerLastName;
-  document.getElementById("dob").value = customer.customerDateOfBirth;
-  document.getElementById("address").value = customer.customerAddress;
-  document.getElementById("mobile").value = customer.customerMobile;
+  document.getElementById("firstName").value = customer.firstName;
+  document.getElementById("lastName").value = customer.lastName;
+  document.getElementById("dob").value = customer.dob;
+  document.getElementById("address").value = customer.address;
+  document.getElementById("mobile").value = customer.mobile;
 };
 
 // Validation functions
@@ -164,30 +163,67 @@ customerForm.addEventListener("submit", async (event) => {
     mobile,
   };
 
+  // try {
+  //   const response = await fetch('http://localhost:8080/backend/customer', {
+  //     method: 'POST',
+  //     headers: {
+  //       'Content-Type': 'application/json',
+  //     },
+  //     body: JSON.stringify(customerData),
+  //   });
+
+  //   if (response.ok) {
+  //     const result = await response.text();
+  //     alert(result);
+
+  //     // If successful, add the new customer to the table
+  //     addCustomerToTable(customerData, customerTableList);
+
+  //     // Clear the form and close the modal
+  //     closeCustomerModal();
+  //   } else {
+  //     const errorText = await response.text();
+  //     alert(`Failed to save customer: ${errorText}`);
+  //   }
+  // } catch (error) {
+  //   console.error('Error:', error);
+  //   alert('An error occurred while saving the customer.');
+  // }
+
   try {
-    const response = await fetch('http://localhost:8080/backend/customer', {
-      method: 'POST',
+    let url = "http://localhost:8080/backend/customer";
+    let method = isUpdateMode ? "PUT" : "POST";
+    let successMessage = isUpdateMode
+      ? "Customer Updated Successfully"
+      : "Customer Added Successfully";
+
+    if (isUpdateMode) {
+      url += `?customerId=${currentCustomerId}`; // Append customerId as a query parameter for updates
+    }
+
+    const response = await fetch(url, {
+      method: method,
       headers: {
-        'Content-Type': 'application/json',
+        "Content-Type": "application/json",
       },
       body: JSON.stringify(customerData),
     });
 
     if (response.ok) {
       const result = await response.text();
-      alert(result);
-      
-      // If successful, add the new customer to the table
-      addCustomerToTable(customerData, customerTableList);
-      
+      alert(successMessage);
+
+      // Reload the entire customer table
+      await loadCustomersIntoTable();
+
       // Clear the form and close the modal
       closeCustomerModal();
     } else {
       const errorText = await response.text();
-      alert(`Failed to save customer: ${errorText}`);
+      alert(`Operation failed: ${errorText}`);
     }
   } catch (error) {
-    console.error('Error:', error);
-    alert('An error occurred while saving the customer.');
+    console.error("Error:", error);
+    alert("An error occurred while processing the customer data.");
   }
 });
