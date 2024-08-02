@@ -40,7 +40,7 @@ public class SQLUtil {
 
 
 
-    public static List<Map<Integer, Object>> copyResultSet(ResultSet resultSet) throws SQLException {
+    private static List<Map<Integer, Object>> copyResultSet(ResultSet resultSet) throws SQLException {
         List<Map<Integer, Object>> rows = new ArrayList<>();
         ResultSetMetaData metaData = resultSet.getMetaData();
         int columnCount = metaData.getColumnCount();

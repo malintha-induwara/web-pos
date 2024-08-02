@@ -2,7 +2,9 @@ package lk.ijse.webpos.backend.dao.custom.impl;
 
 import lk.ijse.webpos.backend.dao.custom.ItemDAO;
 import lk.ijse.webpos.backend.entity.Item;
+import lk.ijse.webpos.backend.util.SQLUtil;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class ItemDAOImpl implements ItemDAO {
@@ -12,8 +14,15 @@ public class ItemDAOImpl implements ItemDAO {
     }
 
     @Override
-    public boolean save(Item item) {
-        return false;
+    public boolean save(Item item) throws SQLException {
+        return SQLUtil.execute("INSERT INTO item VALUES(?,?,?,?,?,?)",
+                item.getItemId(),
+                item.getItemName(),
+                item.getPrice(),
+                item.getQuantity(),
+                item.getCategory(),
+                item.getImagePath()
+        );
     }
 
 
