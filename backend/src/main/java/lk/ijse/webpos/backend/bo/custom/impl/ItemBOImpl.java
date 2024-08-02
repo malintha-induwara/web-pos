@@ -15,7 +15,35 @@ public class ItemBOImpl implements ItemBO {
 
     @Override
     public boolean saveItem(ItemDTO item) throws SQLException {
-        return itemDAO.save(new Item(item.getItemId(),item.getItemName(),item.getPrice(),item.getQuantity(),item.getCategory(),item.getImagePath()));
+        return itemDAO.save(new Item(
+                item.getItemId(),
+                item.getItemName(),
+                item.getPrice(),
+                item.getQuantity(),
+                item.getCategory(),
+                item.getImagePath()
+        ));
+    }
+
+    @Override
+    public boolean deleteItem(String itemId) throws SQLException {
+        return itemDAO.delete(itemId);
+    }
+
+    @Override
+    public ItemDTO searchItem(String itemId) throws SQLException {
+        Item item = itemDAO.search(itemId);
+        if (item != null){
+            return new ItemDTO(
+                    item.getItemId(),
+                    item.getItemName(),
+                    item.getPrice(),
+                    item.getQuantity(),
+                    item.getCategory(),
+                    item.getImagePath()
+            );
+        }
+        return null;
     }
 }
 

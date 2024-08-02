@@ -57,7 +57,7 @@ public class ItemServlet extends HttpServlet {
 
                 //Get the file extension
                 String fileExtension = fileName.substring(fileName.lastIndexOf('.'));
-                String newFileName = UUID.randomUUID() + fileExtension;
+                String newFileName = item.getItemId()+ fileExtension;
                 String filePath = UPLOAD_DIR + newFileName;
 
                 // Save the file
@@ -96,8 +96,41 @@ public class ItemServlet extends HttpServlet {
     }
 
     @Override
-    protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        super.doDelete(req, resp);
+    protected void doDelete(HttpServletRequest req, HttpServletResponse resp){
+
+        try (PrintWriter writer = resp.getWriter()) {
+            String itemId = req.getParameter("itemId");
+
+            if (itemId == null || itemId.trim().isEmpty()) {
+                resp.sendError(HttpServletResponse.SC_BAD_REQUEST, "Item ID is required");
+                return;
+            }
+
+            ItemDTO itemDTO = itemBO.searchItem(itemId);
+            if (itemDTO == null) {
+                resp.sendError(HttpServletResponse.SC_NOT_FOUND, "Item not found");
+                return;
+            }
+
+            boolean isDeleted = itemBO.deleteItem(itemId);
+
+            if (isDeleted) {
+                try {
+                    Files.delete(Paths.get(itemDTO.getImagePath()));
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                resp.setStatus(HttpServletResponse.SC_OK);
+                writer.write("Item deleted successfully");
+            } else {
+                resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+                writer.write("Failed to delete item");
+            }
+
+        } catch (IOException |SQLException e) {
+            resp.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+            e.printStackTrace();
+        }
     }
 }
 
