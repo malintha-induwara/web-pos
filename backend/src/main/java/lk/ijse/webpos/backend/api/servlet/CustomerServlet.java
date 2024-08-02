@@ -48,8 +48,15 @@ public class CustomerServlet extends HttpServlet {
 
     @Override
     protected void doDelete(HttpServletRequest req, HttpServletResponse resp) {
+
         try (PrintWriter writer = resp.getWriter()) {
             String customerId = req.getParameter("customerId");
+
+            if (customerId == null || customerId.trim().isEmpty()) {
+                resp.sendError(HttpServletResponse.SC_BAD_REQUEST, "Customer ID is required");
+                return;
+            }
+
             boolean isDeleted = customerBO.deleteCustomer(customerId);
             if (isDeleted) {
                 resp.setStatus(HttpServletResponse.SC_CREATED);
@@ -89,7 +96,7 @@ public class CustomerServlet extends HttpServlet {
 
 
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp){
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) {
         try (PrintWriter writer = resp.getWriter()) {
             Jsonb jsonb = JsonbBuilder.create();
             resp.setContentType("application/json");

@@ -1,13 +1,14 @@
 package lk.ijse.webpos.backend.dao.custom.impl;
 
 import lk.ijse.webpos.backend.dao.custom.OrderDAO;
+import lk.ijse.webpos.backend.entity.Item;
 import lk.ijse.webpos.backend.entity.Order;
 
-import java.util.ArrayList;
+import java.util.List;
 
 public class OrderDAOImpl implements OrderDAO {
     @Override
-    public ArrayList<Order> getAll() {
+    public List<Order> getAll() {
         return null;
     }
 
