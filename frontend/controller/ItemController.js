@@ -94,7 +94,7 @@ const addItemToTable = (item, table) => {
 
   const base64Image = item.image;
   //Find image format
-  const imageFormat = getImageFormat(base64Image)
+  const imageFormat = getImageFormat(base64Image);
   image.src = `data:${imageFormat};base64,${base64Image}`;
   image.className = "item-image";
   imageCell.appendChild(image);
@@ -107,7 +107,7 @@ const addItemToTable = (item, table) => {
   updateButton.className = "action-button";
   updateButton.addEventListener("click", () => {
     openItemModal();
-    fillFormWithItemData(item);
+    fillFormWithItemData(item.item);
     isItemUpdateMode = true;
     currentItemId = item.itemId;
     itemButton.textContent = "Update Item";
@@ -142,18 +142,24 @@ function getImageFormat(base64String) {
 const fillFormWithItemData = (item) => {
   document.getElementById("itemId").value = item.itemId;
   document.getElementById("itemName").value = item.itemName;
-  document.getElementById("itemPrice").value = item.itemPrice;
-  document.getElementById("itemQty").value = item.itemQty;
+  document.getElementById("itemPrice").value = item.price;
+  document.getElementById("itemQty").value = item.quantity;
   document.getElementById("category").value = item.category;
 
   // Add The Image
   var img = document.createElement("img");
+
+  let itemObject = itemList.find((itemInList) => {
+    return itemInList.item.itemId == item.itemId;
+  });
+
+  let base64Image = itemObject.image;
+
+  const imageFormat = getImageFormat(base64Image);
+  img.src = `data:${imageFormat};base64,${base64Image}`;
   img.id = "item-image-id";
-  let imageBase64 = getImageFromLocalStorage(item.itemId);
-  img.src = imageBase64;
   img.style.width = "100px";
   img.style.height = "100px";
-  // Clear the div and add the new image
   imageInputDiv.innerHTML = "";
   imageInputDiv.appendChild(img);
 };
