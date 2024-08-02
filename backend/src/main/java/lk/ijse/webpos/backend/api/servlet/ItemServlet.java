@@ -20,7 +20,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.sql.SQLException;
-import java.util.UUID;
+import java.util.*;
 
 @WebServlet(urlPatterns = "/item")
 @MultipartConfig
@@ -81,20 +81,52 @@ public class ItemServlet extends HttpServlet {
         }
     }
 
-
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) {
-
-        try(PrintWriter writer = resp.getWriter()){
-            Jsonb jsonb = JsonbBuilder.create();
+        try (PrintWriter writer = resp.getWriter()) {
             resp.setContentType("application/json");
-            jsonb.toJson(itemBO.getAllItems(), writer);
-        }catch (IOException | SQLException e){
+            resp.setCharacterEncoding("UTF-8");
+
+            List<ItemDTO> items = itemBO.getAllItems();
+
+            if (items != null && !items.isEmpty()) {
+                List<Map<String, Object>> itemsWithImages = new ArrayList<>();
+
+                for (ItemDTO item : items) {
+                    Map<String, Object> itemMap = new HashMap<>();
+                    itemMap.put("item", item);
+
+                    String imagePath = item.getImagePath();
+                    if (imagePath != null && !imagePath.isEmpty()) {
+                        try {
+                            byte[] imageBytes = Files.readAllBytes(Paths.get(imagePath));
+                            String base64Image = Base64.getEncoder().encodeToString(imageBytes);
+                            itemMap.put("image", base64Image);
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                            itemMap.put("image", null);
+                        }
+                    } else {
+                        itemMap.put("image", null);
+                    }
+
+                    itemsWithImages.add(itemMap);
+                }
+
+                Jsonb jsonb = JsonbBuilder.create();
+                String jsonItems = jsonb.toJson(itemsWithImages);
+
+                resp.setStatus(HttpServletResponse.SC_OK);
+                writer.write(jsonItems);
+            } else {
+                resp.setStatus(HttpServletResponse.SC_NOT_FOUND);
+                writer.write("No items found");
+            }
+        } catch (IOException | SQLException e ) {
             resp.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
             e.printStackTrace();
         }
     }
-
 
     @Override
     protected void doPut(HttpServletRequest req, HttpServletResponse resp)  {
