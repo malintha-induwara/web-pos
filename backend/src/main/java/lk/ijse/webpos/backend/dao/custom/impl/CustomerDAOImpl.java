@@ -2,9 +2,9 @@ package lk.ijse.webpos.backend.dao.custom.impl;
 
 import lk.ijse.webpos.backend.dao.custom.CustomerDAO;
 import lk.ijse.webpos.backend.entity.Customer;
+import lk.ijse.webpos.backend.entity.Item;
 import lk.ijse.webpos.backend.util.SQLUtil;
 
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -12,7 +12,7 @@ import java.util.Map;
 
 public class CustomerDAOImpl implements CustomerDAO {
     @Override
-    public ArrayList<Customer> getAll() throws SQLException {
+    public List<Customer> getAll() throws SQLException {
         List<Map<Integer, Object>> resultCopy = SQLUtil.execute("SELECT * FROM customer");
         ArrayList<Customer> customers = new ArrayList<>();
 

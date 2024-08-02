@@ -11,8 +11,20 @@ import java.util.Map;
 
 public class ItemDAOImpl implements ItemDAO {
     @Override
-    public ArrayList<Item> getAll() {
-        return null;
+    public List<Item> getAll() throws SQLException {
+        List<Map<Integer, Object>> result=  SQLUtil.execute("SELECT * FROM item");
+        List<Item> items = new ArrayList<>();
+        for (Map<Integer, Object> row : result) {
+            items.add(new Item(
+                    (String) row.get(1),
+                    (String) row.get(2),
+                    (double) row.get(3),
+                    (int) row.get(4),
+                    (String) row.get(5),
+                    (String) row.get(6)
+            ));
+        }
+        return items;
     }
 
     @Override

@@ -12,7 +12,6 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.Part;
 import lk.ijse.webpos.backend.bo.BOFactory;
 import lk.ijse.webpos.backend.bo.custom.ItemBO;
-import lk.ijse.webpos.backend.dto.CustomerDTO;
 import lk.ijse.webpos.backend.dto.ItemDTO;
 
 import java.io.IOException;
@@ -84,13 +83,21 @@ public class ItemServlet extends HttpServlet {
 
 
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        super.doGet(req, resp);
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) {
+
+        try(PrintWriter writer = resp.getWriter()){
+            Jsonb jsonb = JsonbBuilder.create();
+            resp.setContentType("application/json");
+            jsonb.toJson(itemBO.getAllItems(), writer);
+        }catch (IOException | SQLException e){
+            resp.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+            e.printStackTrace();
+        }
     }
 
 
     @Override
-    protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doPut(HttpServletRequest req, HttpServletResponse resp)  {
 
         try (PrintWriter writer = resp.getWriter()) {
 

@@ -7,6 +7,8 @@ import lk.ijse.webpos.backend.dto.ItemDTO;
 import lk.ijse.webpos.backend.entity.Item;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ItemBOImpl implements ItemBO {
     
@@ -56,6 +58,23 @@ public class ItemBOImpl implements ItemBO {
                 item.getCategory(),
                 item.getImagePath()
         ));
+    }
+
+    @Override
+    public List<ItemDTO> getAllItems() throws SQLException {
+        List<Item> allItems = itemDAO.getAll();
+        List<ItemDTO> itemDTOS = new ArrayList<>();
+        for (Item item : allItems) {
+            itemDTOS.add(new ItemDTO(
+                    item.getItemId(),
+                    item.getItemName(),
+                    item.getPrice(),
+                    item.getQuantity(),
+                    item.getCategory(),
+                    item.getImagePath()
+            ));
+        }
+        return itemDTOS;
     }
 }
 
