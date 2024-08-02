@@ -1,31 +1,10 @@
-// Base 64 Image Conversion
-async function getBase64Image(url) {
-  const response = await fetch(url);
-  const blob = await response.blob();
-  const reader = new FileReader();
-  return new Promise((resolve, reject) => {
-    reader.onloadend = () => resolve(reader.result);
-    reader.onerror = reject;
-    reader.readAsDataURL(blob);
-  });
-}
-
-async function saveImagesToLocalStorage(itemList) {
-  for (const item of itemList) {
-    let imgDetails = await getBase64Image(item.itemImage);
-    localStorage.setItem(item.itemId, JSON.stringify(imgDetails));
-  }
-}
-
-function getImageFromLocalStorage(itemId) {
-  return JSON.parse(localStorage.getItem(itemId));
-}
-
-saveImagesToLocalStorage(itemList);
-
-// ----------Image input------------
+//Select Elements
 var imageInput = document.getElementById("input-image");
 var imageInputDiv = document.querySelector(".image-input");
+const itemTableList = document.getElementById("item-table-list");
+const itemModel = document.getElementById("item-modal");
+const itemForm = document.getElementById("item-form");
+const itemButton = document.getElementById("item-submit");
 
 // When the div is clicked, trigger the hidden input's click event
 imageInputDiv.onclick = function () {
@@ -39,8 +18,8 @@ imageInput.onchange = function () {
     var img = document.createElement("img");
     img.id = "item-image-id";
     img.src = e.target.result;
-    img.style.width = "100px"; 
-    img.style.height = "100px"; 
+    img.style.width = "100px";
+    img.style.height = "100px";
 
     // Clear the div and add the new image
     imageInputDiv.innerHTML = "";
@@ -52,9 +31,6 @@ imageInput.onchange = function () {
 };
 
 // Item Controller Code
-const itemModel = document.getElementById("item-modal");
-const itemForm = document.getElementById("item-form");
-const itemButton = document.getElementById("item-submit");
 
 const openItemModal = () => {
   itemModel.style.display = "block";
@@ -81,28 +57,45 @@ document
   .addEventListener("click", closeItemModal);
 
 // Load Items
-const loadItemsIntoTable = () => {
-  const itemTableList = document.getElementById("item-table-list");
+const loadItemsIntoTable = async () => {
+  await loadItemsFromBackend();
 
+  itemTableList.innerHTML = "";
   itemList.forEach((item) => {
     addItemToTable(item, itemTableList);
+    console.log(item);
   });
+};
+
+const loadItemsFromBackend = async () => {
+  try {
+    const response = await fetch("http://localhost:8080/backend/item");
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+    const data = await response.json();
+    itemList = data;
+  } catch (error) {
+    console.error("Error fetching customers:", error);
+  }
 };
 
 const addItemToTable = (item, table) => {
   const row = document.createElement("tr");
-
-  const keys = ["itemId", "itemName", "itemPrice", "itemQty", "category"];
+  const keys = ["itemId", "itemName", "price", "quantity", "category"];
   keys.forEach((key) => {
     const cell = document.createElement("td");
-    cell.textContent = item[key];
+    cell.textContent = item.item[key];
     row.appendChild(cell);
   });
 
   const imageCell = document.createElement("td");
   const image = document.createElement("img");
-  let imageBase64 = getImageFromLocalStorage(item.itemId);
-  image.src = imageBase64;
+
+  const base64Image = item.image;
+  //Find image format
+  const imageFormat = getImageFormat(base64Image)
+  image.src = `data:${imageFormat};base64,${base64Image}`;
   image.className = "item-image";
   imageCell.appendChild(image);
   row.appendChild(imageCell);
@@ -113,7 +106,6 @@ const addItemToTable = (item, table) => {
   updateButton.textContent = "Update";
   updateButton.className = "action-button";
   updateButton.addEventListener("click", () => {
-    
     openItemModal();
     fillFormWithItemData(item);
     isItemUpdateMode = true;
@@ -123,14 +115,12 @@ const addItemToTable = (item, table) => {
   updateCell.appendChild(updateButton);
   row.appendChild(updateCell);
 
-
   // Create 'Remove' button
   const removeCell = document.createElement("td");
   const removeButton = document.createElement("button");
   removeButton.textContent = "Remove";
   removeButton.className = "action-button";
   removeButton.addEventListener("click", () => {
-    
     console.log(`Remove item ${item.itemId}`);
     table.removeChild(row);
     itemList = itemList.filter((i) => i.itemId !== item.itemId);
@@ -141,6 +131,13 @@ const addItemToTable = (item, table) => {
   // Append the row to the table
   table.appendChild(row);
 };
+
+function getImageFormat(base64String) {
+  const prefix = base64String.substr(0, 5);
+  if (prefix === "/9j/4") return "image/jpeg";
+  if (prefix === "iVBOR") return "image/png";
+  return "image/png";
+}
 
 const fillFormWithItemData = (item) => {
   document.getElementById("itemId").value = item.itemId;
@@ -154,8 +151,8 @@ const fillFormWithItemData = (item) => {
   img.id = "item-image-id";
   let imageBase64 = getImageFromLocalStorage(item.itemId);
   img.src = imageBase64;
-  img.style.width = "100px"; 
-  img.style.height = "100px"; 
+  img.style.width = "100px";
+  img.style.height = "100px";
   // Clear the div and add the new image
   imageInputDiv.innerHTML = "";
   imageInputDiv.appendChild(img);
@@ -240,5 +237,3 @@ itemForm.addEventListener("submit", (event) => {
   closeItemModal();
   itemForm.reset();
 });
-
-document.addEventListener("DOMContentLoaded", loadItemsIntoTable);

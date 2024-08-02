@@ -36,28 +36,28 @@ let customerList = [
 
 
 let itemList = [
-  {
-    itemId: "I001",
-    itemName: "Burger",
-    itemPrice: "100",
-    itemQty: "10",
-    category: "Food",
-    itemImage: "/assets/images/foodItems/burger.jpg",
-  },
-  {
-    itemId: "I002",
-    itemName: "Pizza",
-    itemPrice: "150",
-    itemQty: "10",
-    category: "Food",
-    itemImage: "/assets/images/foodItems/pizza.jpg",
-  },
-  {
-    itemId: "I003",
-    itemName: "Chiken Wings",
-    itemPrice: "80",
-    itemQty: "10",
-    category: "Food",
-    itemImage: "/assets/images/foodItems/rice.jpg",
-  },
+  // {
+  //   itemId: "I001",
+  //   itemName: "Burger",
+  //   itemPrice: "100",
+  //   itemQty: "10",
+  //   category: "Food",
+  //   itemImage: "/assets/images/foodItems/burger.jpg",
+  // },
+  // {
+  //   itemId: "I002",
+  //   itemName: "Pizza",
+  //   itemPrice: "150",
+  //   itemQty: "10",
+  //   category: "Food",
+  //   itemImage: "/assets/images/foodItems/pizza.jpg",
+  // },
+  // {
+  //   itemId: "I003",
+  //   itemName: "Chiken Wings",
+  //   itemPrice: "80",
+  //   itemQty: "10",
+  //   category: "Food",
+  //   itemImage: "/assets/images/foodItems/rice.jpg",
+  // },
 ];
