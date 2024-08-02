@@ -29,8 +29,16 @@ public class ItemDAOImpl implements ItemDAO {
 
 
     @Override
-    public boolean update(String id, Item item) {
-        return false;
+    public boolean update(String id, Item item) throws SQLException {
+        return SQLUtil.execute("UPDATE item SET itemId=?, itemName=?, price=?, quantity=?, category=?, imagePath=? WHERE itemId=?",
+                item.getItemId(),
+                item.getItemName(),
+                item.getPrice(),
+                item.getQuantity(),
+                item.getCategory(),
+                item.getImagePath(),
+                id
+        );
     }
 
     @Override

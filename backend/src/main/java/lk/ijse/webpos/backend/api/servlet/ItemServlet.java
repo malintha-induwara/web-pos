@@ -19,6 +19,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.sql.SQLException;
 import java.util.UUID;
 
@@ -84,15 +85,65 @@ public class ItemServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
-
         super.doGet(req, resp);
     }
 
 
     @Override
     protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        super.doPut(req, resp);
+
+        try (PrintWriter writer = resp.getWriter()) {
+
+            String itemId = req.getParameter("itemId");
+
+
+            if (!req.getContentType().toLowerCase().startsWith("multipart/")) {
+                resp.sendError(HttpServletResponse.SC_BAD_REQUEST, "Expected multipart request");
+                return;
+            }
+
+            Part jsonPart = req.getPart("itemData");
+            if (jsonPart == null) {
+                resp.sendError(HttpServletResponse.SC_BAD_REQUEST, "Missing item data");
+                return;
+            }
+
+            Jsonb jsonb = JsonbBuilder.create();
+            ItemDTO item = jsonb.fromJson(jsonPart.getInputStream(), ItemDTO.class);
+
+
+
+            Part filePart = req.getPart("itemImage");
+            if (filePart != null && filePart.getSize() > 0) {
+                String fileName = Paths.get(filePart.getSubmittedFileName()).getFileName().toString();
+
+                //Get the file extension
+                String fileExtension = fileName.substring(fileName.lastIndexOf('.'));
+                String newFileName = item.getItemId()+ fileExtension;
+                String filePath = UPLOAD_DIR + newFileName;
+
+                // Save the file
+                Files.copy(filePart.getInputStream(), Paths.get(filePath), StandardCopyOption.REPLACE_EXISTING);
+
+                item.setImagePath(filePath);
+            }
+
+            System.out.println(item.getImagePath());
+
+            boolean isUpdated = itemBO.updateItem(itemId, item);
+
+            if (isUpdated) {
+                resp.setStatus(HttpServletResponse.SC_OK);
+                writer.write("Item Update Successfully");
+            } else {
+                resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+                writer.write("Failed to Update Item");
+            }
+        } catch (SQLException | IOException | ServletException e) {
+            resp.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+            e.printStackTrace();
+        }
+
     }
 
     @Override
