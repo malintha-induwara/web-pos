@@ -33,4 +33,7 @@ document.getElementById("item-button").addEventListener("click", function () {
   document.getElementById("order-page").style.display = "none";
   document.getElementById("customer-page").style.display = "none";
   document.getElementById("item-page").style.display = "flex";
+
+  //Load items
+  loadItemsIntoTable();
 });
