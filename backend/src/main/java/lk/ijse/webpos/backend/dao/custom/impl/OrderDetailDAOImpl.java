@@ -29,5 +29,10 @@ public class OrderDetailDAOImpl implements OrderDetailDAO {
     public OrderDetail search(String id) {
         return null;
     }
+
+    @Override
+    public boolean save(String orderId, List<OrderDetail> orderDetails) throws Exception {
+        return false;
+    }
 }
 
