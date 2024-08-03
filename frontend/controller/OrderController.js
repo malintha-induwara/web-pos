@@ -5,7 +5,21 @@ let formattedDate = date.toLocaleDateString("en-US", options);
 document.getElementById("current-date").textContent = formattedDate;
 
 // Load Customer Numbers
-function populateCustomerDropdown() {
+async function  populateCustomerDropdown ()  {
+
+
+  //Getting data from backend
+  try {
+    const response = await fetch("http://localhost:8080/backend/customer"); 
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+    const data = await response.json();
+    customerList = data; // Assign the fetched data to customerList
+  } catch (error) {
+    console.error("Error fetching customers:", error);
+  }
+
   const customerSelect = document.getElementById("customerDropDown");
   customerSelect.innerHTML = "";
 
@@ -40,7 +54,19 @@ document
   });
 
 // Populate Items
-function populateOrderItems() {
+async function populateOrderItems() {
+
+  try {
+    const response = await fetch("http://localhost:8080/backend/item");
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+    const data = await response.json();
+    itemList = data;
+  } catch (error) {
+    console.error("Error fetching customers:", error);
+  }
+
   const orderItemsContainer = document.getElementById("order-items");
   orderItemsContainer.innerHTML = "";
 

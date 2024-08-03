@@ -22,14 +22,9 @@ document.getElementById("order-button").addEventListener("click", function () {
   document.getElementById("item-page").style.display = "none";
 
 
-  //dd
-  loadCustomersIntoTable();
-  loadItemsIntoTable();
-  populateCustomerDropdown();
   //Poupulate Methods
-
+  populateCustomerDropdown();
   populateOrderItems();
-
 });
 
 document.getElementById("item-button").addEventListener("click", function () {
