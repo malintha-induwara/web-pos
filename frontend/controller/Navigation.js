@@ -25,9 +25,10 @@ document.getElementById("order-button").addEventListener("click", function () {
   //dd
   loadCustomersIntoTable();
   loadItemsIntoTable();
-  //Poupulate Methods
   populateCustomerDropdown();
-//  populateOrderItems();
+  //Poupulate Methods
+
+  populateOrderItems();
 
 });
 

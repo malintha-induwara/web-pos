@@ -16,8 +16,6 @@ function populateCustomerDropdown() {
 
   // Add the customer options
   customerList.forEach((customer) => {
-    console.log(customer);
-
     let option = document.createElement("option");
     option.value = customer.customerId;
     option.text = customer.customerId;
@@ -49,29 +47,36 @@ function populateOrderItems() {
   itemList.forEach((item) => {
     const itemCard = document.createElement("div");
     itemCard.className = "item-card";
-    itemCard.dataset.itemId = item.itemId;
+    itemCard.dataset.itemId = item.item.itemId;
 
     const itemImage = document.createElement("img");
-    let imageBase64 = getImageFromLocalStorage(item.itemId);
-    itemImage.src = imageBase64;
+
+
+    let itemObject = itemList.find((itemInList) => {
+      return itemInList.item.itemId == item.item.itemId;
+    });
+    let base64Image = itemObject.image;
+
+    const imageFormat = getImageFormat(base64Image);
+    itemImage.src = `data:${imageFormat};base64,${base64Image}`;
     itemImage.width = 160;
-    itemImage.alt = item.itemName.toLowerCase();
+    itemImage.alt = item.item.itemName.toLowerCase();
 
     const itemName = document.createElement("h4");
     itemName.className = "item-name";
-    itemName.textContent = item.itemName;
+    itemName.textContent = item.item.itemName;
 
     const itemInfo = document.createElement("div");
     itemInfo.className = "item-info";
 
     const itemPrice = document.createElement("h2");
     itemPrice.className = "item-price";
-    itemPrice.textContent = `Rs${item.itemPrice}`;
+    itemPrice.textContent = `Rs${item.item.price}`;
 
     const itemCount = document.createElement("span");
     itemCount.className = "item-count";
-    itemCount.textContent = `${item.itemQty} Items`;
-    itemCount.dataset.itemQty = item.itemQty;
+    itemCount.textContent = `${item.item.quantity} Items`;
+    itemCount.dataset.itemQty = item.item.quantity;
 
     itemInfo.appendChild(itemPrice);
     itemInfo.appendChild(itemCount);
@@ -80,7 +85,9 @@ function populateOrderItems() {
     itemCard.appendChild(itemInfo);
     orderItemsContainer.appendChild(itemCard);
 
-    itemCard.addEventListener("click", () => addItemToCart(item, itemCount));
+    itemCard.addEventListener("click", () =>
+      addItemToCart(item.item, itemCount)
+    );
   });
 }
 
@@ -218,7 +225,7 @@ function placeOrder() {
     ),
   };
 
-  console.log("Order Placed:", orderDetails);
+ 
   alert("Order placed successfully!");
 
   //Update the Order ID
