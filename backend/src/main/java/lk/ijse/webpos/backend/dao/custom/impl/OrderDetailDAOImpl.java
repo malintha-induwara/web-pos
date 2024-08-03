@@ -1,18 +1,42 @@
 package lk.ijse.webpos.backend.dao.custom.impl;
 
 import lk.ijse.webpos.backend.dao.custom.OrderDetailDAO;
-import lk.ijse.webpos.backend.entity.Item;
 import lk.ijse.webpos.backend.entity.OrderDetail;
+import lk.ijse.webpos.backend.util.SQLUtil;
 
+import java.sql.SQLException;
 import java.util.List;
 
 public class OrderDetailDAOImpl implements OrderDetailDAO {
     @Override
-    public List<OrderDetail> getAll() {return null;}
+    public List<OrderDetail> getAll() {
+        return null;
+    }
 
     @Override
-    public boolean save(OrderDetail orderDetail) {
-        return false;
+    public boolean save(String orderId, List<OrderDetail> orderDetails) throws Exception {
+        for (OrderDetail orderDetail : orderDetails) {
+            //Set the orderId to the OrderDetail object
+            orderDetail.setOrderId(orderId);
+            //Save the OrderDetail object
+            if (!save(orderDetail)){
+                return false;
+            };
+
+        }
+        return true;
+    }
+
+
+
+    @Override
+    public boolean save(OrderDetail orderDetail) throws SQLException {
+        return SQLUtil.execute("INSERT INTO orderDetail VALUES(?,?,?,?)",
+                orderDetail.getOrderId(),
+                orderDetail.getItemId(),
+                orderDetail.getQuantity(),
+                orderDetail.getUntPrice()
+        );
     }
 
     @Override
@@ -30,9 +54,7 @@ public class OrderDetailDAOImpl implements OrderDetailDAO {
         return null;
     }
 
-    @Override
-    public boolean save(String orderId, List<OrderDetail> orderDetails) throws Exception {
-        return false;
-    }
+
+
 }
 
