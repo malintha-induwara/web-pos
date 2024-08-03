@@ -1,9 +1,10 @@
 package lk.ijse.webpos.backend.dao.custom.impl;
 
 import lk.ijse.webpos.backend.dao.custom.OrderDAO;
-import lk.ijse.webpos.backend.entity.Item;
 import lk.ijse.webpos.backend.entity.Order;
+import lk.ijse.webpos.backend.util.SQLUtil;
 
+import java.sql.SQLException;
 import java.util.List;
 
 public class OrderDAOImpl implements OrderDAO {
@@ -13,8 +14,15 @@ public class OrderDAOImpl implements OrderDAO {
     }
 
     @Override
-    public boolean save(Order order) {
-        return false;
+    public boolean save(Order order) throws SQLException {
+        return SQLUtil.execute("INSERT INTO orders VALUES(?,?,?,?,?,?)",
+                order.getOrderId(),
+                order.getDateAndTime(),
+                order.getCustomerId(),
+                order.getSubtotal(),
+                order.getDiscount(),
+                order.getAmount_payed()
+        );
     }
 
     @Override
@@ -32,4 +40,3 @@ public class OrderDAOImpl implements OrderDAO {
         return null;
     }
 }
-
