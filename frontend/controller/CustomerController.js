@@ -42,7 +42,7 @@ const loadCustomersIntoTable = async () => {
 
 const loadCustomersFromBackend = async () => {
   try {
-    const response = await fetch("http://localhost:8080/backend/customer"); // Replace with your actual servlet URL
+    const response = await fetch("http://localhost:8080/backend/customer"); 
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);
     }
