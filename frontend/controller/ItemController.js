@@ -120,10 +120,33 @@ const addItemToTable = (item, table) => {
   const removeButton = document.createElement("button");
   removeButton.textContent = "Remove";
   removeButton.className = "action-button";
-  removeButton.addEventListener("click", () => {
-    console.log(`Remove item ${item.itemId}`);
+  removeButton.addEventListener("click", async () => {
+    console.log(`Remove item ${item.item.itemId}`);
+
+    try {
+
+      const response = await fetch(
+        `http://localhost:8080/backend/item?itemId=${item.item.itemId}`,
+        {
+          method: "DELETE",
+        }
+      );
+
+      if (response.ok) {
+        table.removeChild(row);
+        itemList = itemList.filter((i) => i.item.itemId !== i.item.itemId);
+      } else {
+        const errorText = await response.text();
+        console.error("Error removing item:", errorText);
+      }
+
+
+    } catch (error) {
+      console.error("Error removing item:", error);
+    }
+
     table.removeChild(row);
-    itemList = itemList.filter((i) => i.itemId !== item.itemId);
+   
   });
   removeCell.appendChild(removeButton);
   row.appendChild(removeCell);
