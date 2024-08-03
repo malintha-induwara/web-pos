@@ -4,10 +4,8 @@ let options = { year: "numeric", month: "long", day: "numeric" };
 let formattedDate = date.toLocaleDateString("en-US", options);
 document.getElementById("current-date").textContent = formattedDate;
 
-// Load Customer Numbers
+// Load Customer ids
 async function  populateCustomerDropdown ()  {
-
-
   //Getting data from backend
   try {
     const response = await fetch("http://localhost:8080/backend/customer"); 
@@ -37,23 +35,7 @@ async function  populateCustomerDropdown ()  {
   });
 }
 
-// Add an event listener
-document
-  .getElementById("customerDropDown")
-  .addEventListener("change", function () {
-    let selectedCustomerId = this.value;
-    let selectedCustomer = customerList.find(
-      (customer) => customer.customerId === selectedCustomerId
-    );
-    if (selectedCustomer) {
-      document.getElementById("name-holder").textContent =
-        "Name: " + selectedCustomer.firstName;
-    } else {
-      document.getElementById("name-holder").textContent = "Name: ";
-    }
-  });
-
-// Populate Items
+// Load Items
 async function populateOrderItems() {
 
   try {
@@ -102,7 +84,7 @@ async function populateOrderItems() {
     const itemCount = document.createElement("span");
     itemCount.className = "item-count";
     itemCount.textContent = `${item.item.quantity} Items`;
-    itemCount.dataset.itemQty = item.item.quantity;
+    itemCount.dataset.quantity = item.item.quantity;
 
     itemInfo.appendChild(itemPrice);
     itemInfo.appendChild(itemCount);
@@ -117,10 +99,25 @@ async function populateOrderItems() {
   });
 }
 
+// Add an event listener
+document.getElementById("customerDropDown").addEventListener("change", function () {
+  let selectedCustomerId = this.value;
+  let selectedCustomer = customerList.find(
+    (customer) => customer.customerId === selectedCustomerId
+  );
+  if (selectedCustomer) {
+    document.getElementById("name-holder").textContent =
+      "Name: " + selectedCustomer.firstName;
+  } else {
+    document.getElementById("name-holder").textContent = "Name: ";
+  }
+});
+
+
 const cart = [];
 
 function addItemToCart(item, itemCountElement) {
-  const itemCount = parseInt(itemCountElement.dataset.itemQty, 10);
+  const itemCount = parseInt(itemCountElement.dataset.quantity, 10);
 
   if (itemCount <= 0) {
     alert(`Item ${item.itemName} is out of stock.`);
@@ -134,7 +131,7 @@ function addItemToCart(item, itemCountElement) {
     cart.push({ ...item, quantity: 1 });
   }
 
-  itemCountElement.dataset.itemQty = itemCount - 1;
+  itemCountElement.dataset.quantity = itemCount - 1;
   itemCountElement.textContent = `${itemCount - 1} Items`;
 
   updateCartDisplay();
@@ -148,8 +145,8 @@ function removeItemFromCart(itemId) {
   const itemCountElement = document.querySelector(
     `.item-card[data-item-id='${itemId}'] .item-count`
   );
-  const currentQty = parseInt(itemCountElement.dataset.itemQty, 10);
-  itemCountElement.dataset.itemQty = currentQty + item.quantity;
+  const currentQty = parseInt(itemCountElement.dataset.quantity, 10);
+  itemCountElement.dataset.quantity = currentQty + item.quantity;
   itemCountElement.textContent = `${currentQty + item.quantity} Items`;
 
   cart.splice(itemIndex, 1);
@@ -171,7 +168,7 @@ function updateCartDisplay() {
     cartItemName.textContent = `${cartItem.itemName} x ${cartItem.quantity}`;
 
     const cartItemPrice = document.createElement("p");
-    const itemTotalPrice = cartItem.itemPrice * cartItem.quantity;
+    const itemTotalPrice = cartItem.price * cartItem.quantity;
     cartItemPrice.textContent = `Rs${itemTotalPrice.toFixed(2)}`;
 
     const removeButton = document.createElement("button");
@@ -201,10 +198,7 @@ function updateCartDisplay() {
 
 // Add event listeners to update the cart display when cash or discount inputs change
 document.getElementById("cash").addEventListener("input", updateCartDisplay);
-document
-  .getElementById("discount")
-  .addEventListener("input", updateCartDisplay);
-
+document.getElementById("discount").addEventListener("input", updateCartDisplay);
 document.getElementById("place-order").addEventListener("click", placeOrder);
 
 function placeOrder() {
@@ -235,6 +229,8 @@ function placeOrder() {
     alert("Insufficient cash provided.");
     return;
   }
+
+  
 
   const orderDetails = {
     orderId: document.getElementById("order-id").textContent,
