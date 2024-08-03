@@ -9,7 +9,6 @@ function populateCustomerDropdown() {
   const customerSelect = document.getElementById("customerDropDown");
   customerSelect.innerHTML = "";
 
-
   let defaultOption = document.createElement("option");
   defaultOption.value = "";
   defaultOption.text = "Select Customer";
@@ -17,9 +16,11 @@ function populateCustomerDropdown() {
 
   // Add the customer options
   customerList.forEach((customer) => {
+    console.log(customer);
+
     let option = document.createElement("option");
     option.value = customer.customerId;
-    option.text = customer.customerMobile;
+    option.text = customer.customerId;
     customerSelect.appendChild(option);
   });
 }
@@ -34,7 +35,7 @@ document
     );
     if (selectedCustomer) {
       document.getElementById("name-holder").textContent =
-        "Name: " + selectedCustomer.customerFirstName;
+        "Name: " + selectedCustomer.firstName;
     } else {
       document.getElementById("name-holder").textContent = "Name: ";
     }
@@ -178,13 +179,11 @@ function placeOrder() {
 
   const customer = document.getElementById("customerDropDown").value;
 
-
   const balance = parseFloat(
     document.getElementById("balance").textContent.slice(1)
   );
 
-  
-  if (customer ==="") {
+  if (customer === "") {
     alert("Customer is required.");
     return;
   }
@@ -222,7 +221,6 @@ function placeOrder() {
   console.log("Order Placed:", orderDetails);
   alert("Order placed successfully!");
 
-
   //Update the Order ID
 
   let orderId = document.getElementById("order-id");
@@ -230,12 +228,10 @@ function placeOrder() {
   currentOrderId++;
   orderId.textContent = "Order ID: " + currentOrderId;
 
-
-
   cart.length = 0; // Clear the cart
-  document.getElementById("cash").value = ""; 
-  document.getElementById("discount").value = ""; 
-  updateCartDisplay(); 
+  document.getElementById("cash").value = "";
+  document.getElementById("discount").value = "";
+  updateCartDisplay();
 }
 
 // Initialize the dropdown and items

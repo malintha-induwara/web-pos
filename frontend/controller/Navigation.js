@@ -5,9 +5,7 @@ document.getElementById("home-button").addEventListener("click", function () {
   document.getElementById("home-page").style.display = "flex";
 });
 
-document
-  .getElementById("customer-button")
-  .addEventListener("click", function () {
+document.getElementById("customer-button").addEventListener("click", function () {
     document.getElementById("home-page").style.display = "none";
     document.getElementById("order-page").style.display = "none";
     document.getElementById("customer-page").style.display = "flex";
@@ -23,9 +21,14 @@ document.getElementById("order-button").addEventListener("click", function () {
   document.getElementById("customer-page").style.display = "none";
   document.getElementById("item-page").style.display = "none";
 
+
+  //dd
+  loadCustomersIntoTable();
+  loadItemsIntoTable();
   //Poupulate Methods
-  populateOrderItems();
   populateCustomerDropdown();
+//  populateOrderItems();
+
 });
 
 document.getElementById("item-button").addEventListener("click", function () {
