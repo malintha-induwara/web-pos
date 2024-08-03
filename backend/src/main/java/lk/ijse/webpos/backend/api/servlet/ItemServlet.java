@@ -165,9 +165,10 @@ public class ItemServlet extends HttpServlet {
                 Files.copy(filePart.getInputStream(), Paths.get(filePath), StandardCopyOption.REPLACE_EXISTING);
 
                 item.setImagePath(filePath);
+            }else {
+                ItemDTO itemDTO = itemBO.searchItem(itemId);
+                item.setImagePath(itemDTO.getImagePath());
             }
-
-            System.out.println(item.getImagePath());
 
             boolean isUpdated = itemBO.updateItem(itemId, item);
 
