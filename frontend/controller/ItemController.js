@@ -62,8 +62,8 @@ const loadItemsIntoTable = async () => {
 
   itemTableList.innerHTML = "";
   itemList.forEach((item) => {
-    addItemToTable(item, itemTableList);
     console.log(item);
+    addItemToTable(item, itemTableList);
   });
 };
 
@@ -109,7 +109,7 @@ const addItemToTable = (item, table) => {
     openItemModal();
     fillFormWithItemData(item.item);
     isItemUpdateMode = true;
-    currentItemId = item.itemId;
+    currentItemId = item.item.itemId;
     itemButton.textContent = "Update Item";
   });
   updateCell.appendChild(updateButton);
@@ -120,10 +120,33 @@ const addItemToTable = (item, table) => {
   const removeButton = document.createElement("button");
   removeButton.textContent = "Remove";
   removeButton.className = "action-button";
-  removeButton.addEventListener("click", () => {
-    console.log(`Remove item ${item.itemId}`);
+  removeButton.addEventListener("click", async () => {
+    console.log(`Remove item ${item.item.itemId}`);
+
+    try {
+
+      const response = await fetch(
+        `http://localhost:8080/backend/item?itemId=${item.item.itemId}`,
+        {
+          method: "DELETE",
+        }
+      );
+
+      if (response.ok) {
+        table.removeChild(row);
+        itemList = itemList.filter((i) => i.item.itemId !== i.item.itemId);
+      } else {
+        const errorText = await response.text();
+        console.error("Error removing item:", errorText);
+      }
+
+
+    } catch (error) {
+      console.error("Error removing item:", error);
+    }
+
     table.removeChild(row);
-    itemList = itemList.filter((i) => i.itemId !== item.itemId);
+   
   });
   removeCell.appendChild(removeButton);
   row.appendChild(removeCell);
@@ -173,14 +196,14 @@ const validateItemQty = (qty) => /^[0-9]+$/.test(qty) && parseInt(qty, 10) > 0;
 const validateCategory = (category) => category.trim() !== "";
 
 // Handle form submission to add or update item
-itemForm.addEventListener("submit", (event) => {
+itemForm.addEventListener("submit", async (event) => {
   event.preventDefault();
 
   // Get form data
   const itemId = document.getElementById("itemId").value;
   const itemName = document.getElementById("itemName").value;
-  const itemPrice = document.getElementById("itemPrice").value;
-  const itemQty = document.getElementById("itemQty").value;
+  const price = document.getElementById("itemPrice").value;
+  const quantity = document.getElementById("itemQty").value;
   const category = document.getElementById("category").value;
 
   // Validate form data
@@ -194,11 +217,11 @@ itemForm.addEventListener("submit", (event) => {
     );
     return;
   }
-  if (!validateItemPrice(itemPrice)) {
+  if (!validateItemPrice(price)) {
     alert("Item price must be a valid positive number.");
     return;
   }
-  if (!validateItemQty(itemQty)) {
+  if (!validateItemQty(quantity)) {
     alert("Item quantity must be a valid positive integer.");
     return;
   }
@@ -207,39 +230,60 @@ itemForm.addEventListener("submit", (event) => {
     return;
   }
 
+  const formData = new FormData();
+
   // Create new item object from form data
   const itemData = {
     itemId,
     itemName,
-    itemPrice,
-    itemQty,
+    price,
+    quantity,
     category,
   };
 
-  const itemTableList = document.getElementById("item-table-list");
+  formData.append("itemData", JSON.stringify(itemData));
 
-  if (isItemUpdateMode) {
-    // Update existing item
-    const itemIndex = itemList.findIndex((i) => i.itemId === currentItemId);
-    itemList[itemIndex] = itemData;
+  //Get the image
+  let imageFile = imageInput.files[0];
 
-    let newImage = document.getElementById("item-image-id");
-    let imageBase64 = newImage.src;
-    localStorage.setItem(itemData.itemId, JSON.stringify(imageBase64));
-    itemTableList.innerHTML = "";
-
-    // Remove the image child
-    loadItemsIntoTable();
-  } else {
-    // Add new item to itemList array
-    let newImage = document.getElementById("item-image-id");
-    let imageBase64 = newImage.src;
-    localStorage.setItem(itemData.itemId, JSON.stringify(imageBase64));
-    itemList.push(itemData);
-    addItemToTable(itemData, itemTableList);
+  if (imageFile) {
+    formData.append("itemImage", imageFile);
   }
 
-  // Close the modal and reset the form
-  closeItemModal();
-  itemForm.reset();
+  try {
+    let url = "http://localhost:8080/backend/item";
+    let method = isItemUpdateMode ? "PUT" : "POST";
+    let successMessage = isItemUpdateMode
+      ? "Item Updated Successfully"
+      : "Item Added Successfully";
+
+    if (isItemUpdateMode) {
+      url += `?itemId=${currentItemId}`;
+    }
+
+    console.log(formData);
+
+    const response = await fetch(url, {
+      method: method,
+      body: formData,
+    });
+
+    if (response.ok) {
+      const result = await response.text();
+      alert(successMessage);
+      await loadItemsIntoTable();
+
+      //close the model
+
+      closeItemModal();
+    } else {
+      const errorText = await response.text();
+      alert(`Operation failed: ${errorText}`);
+    }
+
+    // Close the modal and reset the form
+  } catch (error) {
+    console.error("Error:", error);
+    alert("An error occurred while processing the customer data.");
+  }
 });
