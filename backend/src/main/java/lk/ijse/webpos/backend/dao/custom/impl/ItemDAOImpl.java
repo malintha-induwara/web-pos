@@ -4,24 +4,29 @@ import lk.ijse.webpos.backend.dao.custom.ItemDAO;
 import lk.ijse.webpos.backend.entity.Item;
 import lk.ijse.webpos.backend.util.SQLUtil;
 
+import java.sql.Connection;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
 public class ItemDAOImpl implements ItemDAO {
+
+    private Connection connection;
+
     @Override
     public List<Item> getAll() throws SQLException {
-        List<Map<Integer, Object>> result=  SQLUtil.execute("SELECT * FROM item");
+        ResultSet result=  SQLUtil.execute(connection,"SELECT * FROM item");
         List<Item> items = new ArrayList<>();
-        for (Map<Integer, Object> row : result) {
+        while (result.next()){
             items.add(new Item(
-                    (String) row.get(1),
-                    (String) row.get(2),
-                    (double) row.get(3),
-                    (int) row.get(4),
-                    (String) row.get(5),
-                    (String) row.get(6)
+                    result.getString(1),
+                    result.getString(2),
+                    result.getDouble(3),
+                    result.getInt(4),
+                    result.getString(5),
+                    result.getString(6)
             ));
         }
         return items;
@@ -29,7 +34,7 @@ public class ItemDAOImpl implements ItemDAO {
 
     @Override
     public boolean save(Item item) throws SQLException {
-        return SQLUtil.execute("INSERT INTO item VALUES(?,?,?,?,?,?)",
+        return SQLUtil.execute(connection,"INSERT INTO item VALUES(?,?,?,?,?,?)",
                 item.getItemId(),
                 item.getItemName(),
                 item.getPrice(),
@@ -42,7 +47,7 @@ public class ItemDAOImpl implements ItemDAO {
 
     @Override
     public boolean update(String id, Item item) throws SQLException {
-        return SQLUtil.execute("UPDATE item SET itemId=?, itemName=?, price=?, quantity=?, category=?, imagePath=? WHERE itemId=?",
+        return SQLUtil.execute(connection,"UPDATE item SET itemId=?, itemName=?, price=?, quantity=?, category=?, imagePath=? WHERE itemId=?",
                 item.getItemId(),
                 item.getItemName(),
                 item.getPrice(),
@@ -55,24 +60,28 @@ public class ItemDAOImpl implements ItemDAO {
 
     @Override
     public boolean delete(String id) throws SQLException {
-        return SQLUtil.execute("DELETE FROM item WHERE itemId=?", id);
+        return SQLUtil.execute(connection,"DELETE FROM item WHERE itemId=?", id);
     }
 
     @Override
     public Item search(String id) throws SQLException {
-        List<Map<Integer, Object>> result =  SQLUtil.execute("SELECT * FROM item WHERE itemId=?", id);
-        if (!result.isEmpty()){
-            Map<Integer, Object> row = result.get(0);
+        ResultSet result =  SQLUtil.execute(connection,"SELECT * FROM item WHERE itemId=?", id);
+        if (result.next()){
             return new Item(
-                    (String) row.get(1),
-                    (String) row.get(2),
-                    (double) row.get(3),
-                    (int) row.get(4),
-                    (String) row.get(5),
-                    (String) row.get(6)
+                    result.getString(1),
+                    result.getString(2),
+                    result.getDouble(3),
+                    result.getInt(4),
+                    result.getString(5),
+                    result.getString(6)
             );
         }
         return null;
+    }
+
+    @Override
+    public void setConnection(Connection connection) {
+        this.connection = connection;
     }
 }
 
