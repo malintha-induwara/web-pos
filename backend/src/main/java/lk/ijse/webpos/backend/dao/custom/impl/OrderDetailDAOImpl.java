@@ -4,10 +4,14 @@ import lk.ijse.webpos.backend.dao.custom.OrderDetailDAO;
 import lk.ijse.webpos.backend.entity.OrderDetail;
 import lk.ijse.webpos.backend.util.SQLUtil;
 
+import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.List;
 
 public class OrderDetailDAOImpl implements OrderDetailDAO {
+
+    private Connection connection;
+
     @Override
     public List<OrderDetail> getAll() {
         return null;
@@ -31,7 +35,7 @@ public class OrderDetailDAOImpl implements OrderDetailDAO {
 
     @Override
     public boolean save(OrderDetail orderDetail) throws SQLException {
-        return SQLUtil.execute("INSERT INTO orderDetail VALUES(?,?,?,?)",
+        return SQLUtil.execute(connection,"INSERT INTO orderDetail VALUES(?,?,?,?)",
                 orderDetail.getOrderId(),
                 orderDetail.getItemId(),
                 orderDetail.getQuantity(),
@@ -55,6 +59,9 @@ public class OrderDetailDAOImpl implements OrderDetailDAO {
     }
 
 
-
+    @Override
+    public void setConnection(Connection connection) {
+        this.connection=connection;
+    }
 }
 
