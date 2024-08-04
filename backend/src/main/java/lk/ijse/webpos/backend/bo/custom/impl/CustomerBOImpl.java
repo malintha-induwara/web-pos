@@ -5,7 +5,9 @@ import lk.ijse.webpos.backend.dao.DAOFactory;
 import lk.ijse.webpos.backend.dao.custom.CustomerDAO;
 import lk.ijse.webpos.backend.dto.CustomerDTO;
 import lk.ijse.webpos.backend.entity.Customer;
+import lk.ijse.webpos.backend.util.SQLUtil;
 
+import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -17,48 +19,60 @@ public class CustomerBOImpl implements CustomerBO {
 
     @Override
     public boolean saveCustomer(CustomerDTO customerDTO) throws SQLException {
-        return customerDAO.save(new Customer(
-                customerDTO.getCustomerId(),
-                customerDTO.getFirstName(),
-                customerDTO.getLastName(),
-                customerDTO.getDob(),
-                customerDTO.getAddress(),
-                customerDTO.getMobile()
-        ));
+        try(Connection connection = SQLUtil.getConnection()) {
+            customerDAO.setConnection(connection);
+            return customerDAO.save(new Customer(
+                    customerDTO.getCustomerId(),
+                    customerDTO.getFirstName(),
+                    customerDTO.getLastName(),
+                    customerDTO.getDob(),
+                    customerDTO.getAddress(),
+                    customerDTO.getMobile()
+            ));
+        }
     }
 
     @Override
     public boolean deleteCustomer(String customerId) throws SQLException {
-        return customerDAO.delete(customerId);
+        try(Connection connection = SQLUtil.getConnection()) {
+            customerDAO.setConnection(connection);
+            return customerDAO.delete(customerId);
+        }
     }
 
     @Override
     public boolean updateCustomer(String customerId, CustomerDTO customerDTO) throws SQLException {
-        return customerDAO.update(customerId,
-                new Customer(customerDTO.getCustomerId(),
-                        customerDTO.getFirstName(),
-                        customerDTO.getLastName(),
-                        customerDTO.getDob(),
-                        customerDTO.getAddress(),
-                        customerDTO.getMobile()
-                ));
+        try (Connection connection = SQLUtil.getConnection()) {
+            customerDAO.setConnection(connection);
+            return customerDAO.update(customerId,
+                    new Customer(customerDTO.getCustomerId(),
+                            customerDTO.getFirstName(),
+                            customerDTO.getLastName(),
+                            customerDTO.getDob(),
+                            customerDTO.getAddress(),
+                            customerDTO.getMobile()
+                    ));
+        }
     }
 
     @Override
     public List<CustomerDTO> getAllCustomers() throws SQLException {
-        List<Customer> allCustomers = customerDAO.getAll();
-        List<CustomerDTO> allCustomersDTO = new ArrayList<>();
-        for (Customer customer : allCustomers) {
-            allCustomersDTO.add(new CustomerDTO(
-                    customer.getCustomerId(),
-                    customer.getFirstName(),
-                    customer.getLastName(),
-                    customer.getDob(),
-                    customer.getAddress(),
-                    customer.getMobile()
-            ));
+        try (Connection connection = SQLUtil.getConnection()) {
+            customerDAO.setConnection(connection);
+            List<Customer> allCustomers = customerDAO.getAll();
+            List<CustomerDTO> allCustomersDTO = new ArrayList<>();
+            for (Customer customer : allCustomers) {
+                allCustomersDTO.add(new CustomerDTO(
+                        customer.getCustomerId(),
+                        customer.getFirstName(),
+                        customer.getLastName(),
+                        customer.getDob(),
+                        customer.getAddress(),
+                        customer.getMobile()
+                ));
+            }
+            return allCustomersDTO;
         }
-        return allCustomersDTO;
     }
 }
 
