@@ -6,4 +6,5 @@ import java.sql.SQLException;
 
 public interface OrderBO extends SuperBO {
     boolean placeOrder(OrderDTO order) throws SQLException;
+    String getOrderId() throws SQLException;
 }
