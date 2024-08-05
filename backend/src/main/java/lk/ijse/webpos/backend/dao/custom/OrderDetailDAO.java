@@ -7,5 +7,4 @@ import java.sql.SQLException;
 import java.util.List;
 
 public interface OrderDetailDAO extends CrudDAO<OrderDetail> {
-    boolean save(String orderId, List<OrderDetail> orderDetails) throws SQLException;
 }

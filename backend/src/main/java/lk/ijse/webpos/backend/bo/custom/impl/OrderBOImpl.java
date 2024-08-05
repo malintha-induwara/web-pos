@@ -14,7 +14,6 @@ import lk.ijse.webpos.backend.util.SQLUtil;
 
 import java.sql.Connection;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 
 public class OrderBOImpl implements OrderBO {
@@ -24,55 +23,64 @@ public class OrderBOImpl implements OrderBO {
 
 
     @Override
-    public boolean saveOrder(OrderDTO order) throws SQLException {
-
-        boolean result = false;
+    public boolean placeOrder(OrderDTO order) throws SQLException {
         try (Connection connection = SQLUtil.getConnection()) {
-
+            //Set Connections
             connection.setAutoCommit(false);
             orderDAO.setConnection(connection);
             orderDetailDAO.setConnection(connection);
             itemDAO.setConnection(connection);
-
-
-            boolean isOrderSaved = orderDAO.save(new Order(order.getOrderId(), order.getDateAndTime(), order.getCustomerId(), order.getSubtotal(), order.getDiscount(), order.getAmount_payed()));
-            if (isOrderSaved) {
-                //Convert to OrderDetail objects
-                List<OrderDetail> orderDetails = new ArrayList<>();
-                for (OrderDetailDTO orderDetail : order.getOrderDetails()) {
-                    orderDetails.add(new OrderDetail(
-                            order.getOrderId(),
-                            orderDetail.getItemId(),
-                            orderDetail.getQuantity(),
-                            orderDetail.getUntPrice()
-                    ));
-                }
-                boolean isOrderDetailsSaved = orderDetailDAO.save(order.getOrderId(), orderDetails);
-                if (isOrderDetailsSaved) {
-                    for (OrderDetailDTO orderDetail : order.getOrderDetails()) {
-                        Item item = itemDAO.search(orderDetail.getItemId());
-                        item.setQuantity(item.getQuantity() - orderDetail.getQuantity());
-
-                        boolean isItemUpdated = itemDAO.update(item.getItemId(), item);
-                        if (!isItemUpdated) {
-                            connection.rollback();
-                            return false;
-                        }
-                    }
-                    connection.commit();
-                    result = true;
-                } else {
-                    connection.rollback();
-                }
-            } else {
+            //Save In the Order Table
+            if (saveOrder(order) && saveOrderDetails(order.getOrderId(), order.getOrderDetails()) && updateItems(order.getOrderDetails())){
+                connection.commit();
+                return true;
+            }else {
                 connection.rollback();
             }
-
             connection.setAutoCommit(true);
-            return result;
-        } catch (SQLException e) {
-            throw e;
+            return false;
         }
     }
+
+    private boolean saveOrder(OrderDTO order) throws SQLException {
+        return orderDAO.save(new Order(
+                order.getOrderId(),
+                order.getDateAndTime(),
+                order.getCustomerId(),
+                order.getSubtotal(),
+                order.getDiscount(),
+                order.getAmount_payed()
+        ));
+    }
+
+    private boolean saveOrderDetails(String orderId, List<OrderDetailDTO> orderDetailList) throws SQLException {
+        for (OrderDetailDTO orderDetailDTO : orderDetailList) {
+            boolean isSaved = orderDetailDAO.save(new OrderDetail(
+                    orderId,
+                    orderDetailDTO.getItemId(),
+                    orderDetailDTO.getQuantity(),
+                    orderDetailDTO.getUntPrice()
+            ));
+            if (!isSaved) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+
+    private boolean updateItems(List<OrderDetailDTO> orderDetailList) throws SQLException {
+        for (OrderDetailDTO orderDetail : orderDetailList) {
+            Item item = itemDAO.search(orderDetail.getItemId());
+            item.setQuantity(item.getQuantity() - orderDetail.getQuantity());
+            boolean isItemUpdated = itemDAO.update(item.getItemId(), item);
+            if (!isItemUpdated) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+
 }
 

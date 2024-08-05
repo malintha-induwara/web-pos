@@ -5,5 +5,5 @@ import lk.ijse.webpos.backend.dto.OrderDTO;
 import java.sql.SQLException;
 
 public interface OrderBO extends SuperBO {
-    boolean saveOrder(OrderDTO order) throws SQLException;
+    boolean placeOrder(OrderDTO order) throws SQLException;
 }

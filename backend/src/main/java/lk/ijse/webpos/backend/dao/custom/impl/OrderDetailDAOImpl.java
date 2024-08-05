@@ -17,21 +17,6 @@ public class OrderDetailDAOImpl implements OrderDetailDAO {
         return null;
     }
 
-    @Override
-    public boolean save(String orderId, List<OrderDetail> orderDetails) throws SQLException {
-        for (OrderDetail orderDetail : orderDetails) {
-            //Set the orderId to the OrderDetail object
-            orderDetail.setOrderId(orderId);
-            //Save the OrderDetail object
-            if (!save(orderDetail)){
-                return false;
-            };
-
-        }
-        return true;
-    }
-
-
 
     @Override
     public boolean save(OrderDetail orderDetail) throws SQLException {
