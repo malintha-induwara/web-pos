@@ -14,6 +14,7 @@ import lk.ijse.webpos.backend.util.SQLUtil;
 
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.time.LocalDateTime;
 import java.util.List;
 
 public class OrderBOImpl implements OrderBO {
@@ -62,7 +63,7 @@ public class OrderBOImpl implements OrderBO {
     private boolean saveOrder(OrderDTO order) throws SQLException {
         return orderDAO.save(new Order(
                 order.getOrderId(),
-                order.getDateAndTime(),
+                LocalDateTime.now(),
                 order.getCustomerId(),
                 order.getSubtotal(),
                 order.getDiscount(),
