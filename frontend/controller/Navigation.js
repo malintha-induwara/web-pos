@@ -25,6 +25,7 @@ document.getElementById("order-button").addEventListener("click", function () {
   //Poupulate Methods
   populateCustomerDropdown();
   populateOrderItems();
+  loadOrderId();
 });
 
 document.getElementById("item-button").addEventListener("click", function () {
