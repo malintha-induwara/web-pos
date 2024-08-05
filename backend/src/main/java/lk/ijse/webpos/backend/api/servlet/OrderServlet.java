@@ -29,7 +29,6 @@ public class OrderServlet extends HttpServlet {
 
     @Override
     public void init(ServletConfig config) throws ServletException {
-        super.init(config);
         try {
             DirectoryUtil.init();
             logger.info("OrderServlet initialized successfully");
@@ -40,7 +39,7 @@ public class OrderServlet extends HttpServlet {
     }
 
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp){
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) {
         logger.debug("Received POST request for order creation");
         try (PrintWriter writer = resp.getWriter()) {
             if (req.getContentType() == null || !req.getContentType().toLowerCase().startsWith("application/json")) {

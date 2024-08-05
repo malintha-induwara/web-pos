@@ -38,7 +38,6 @@ public class CustomerServlet extends HttpServlet {
     }
 
 
-
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) {
         logger.debug("Received POST request for customer creation");

@@ -32,11 +32,8 @@ import java.util.*;
 public class ItemServlet extends HttpServlet {
 
     private static final Logger logger = LoggerFactory.getLogger(ItemServlet.class);
-
+    private static final String UPLOAD_DIR = DirectoryUtil.IMAGE_DIRECTORY + File.separator;
     private final ItemBO itemBO = (ItemBO) BOFactory.getBoFactory().getBO(BOFactory.BOTypes.ITEM);
-
-    private static final String UPLOAD_DIR = DirectoryUtil.IMAGE_DIRECTORY.toString()+ File.separator;
-
 
     @Override
     public void init(ServletConfig config) throws ServletException {
@@ -77,7 +74,7 @@ public class ItemServlet extends HttpServlet {
 
                 //Get the file extension
                 String fileExtension = fileName.substring(fileName.lastIndexOf('.'));
-                String newFileName = item.getItemId()+ fileExtension;
+                String newFileName = item.getItemId() + fileExtension;
                 String filePath = UPLOAD_DIR + newFileName;
 
                 // Save the file
@@ -100,7 +97,6 @@ public class ItemServlet extends HttpServlet {
         } catch (SQLException | IOException | ServletException e) {
             logger.error("Error processing item creation request", e);
             resp.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
-            e.printStackTrace();
         }
     }
 
@@ -148,7 +144,7 @@ public class ItemServlet extends HttpServlet {
                 resp.setStatus(HttpServletResponse.SC_NOT_FOUND);
                 writer.write("No items found");
             }
-        } catch (IOException | SQLException e ) {
+        } catch (IOException | SQLException e) {
             logger.error("Error retrieving all items", e);
             resp.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
         }
