@@ -23,20 +23,9 @@ import java.util.Map;
 
 @WebServlet(urlPatterns = "/order")
 public class OrderServlet extends HttpServlet {
+
     private static final Logger logger = LoggerFactory.getLogger(OrderServlet.class);
-
     private final OrderBO orderBO = (OrderBO) BOFactory.getBoFactory().getBO(BOFactory.BOTypes.ORDER);
-
-    @Override
-    public void init(ServletConfig config) throws ServletException {
-        try {
-            DirectoryUtil.init();
-            logger.info("OrderServlet initialized successfully");
-        } catch (IOException e) {
-            logger.error("Error initializing OrderServlet", e);
-            throw new ServletException("Failed to initialize OrderServlet", e);
-        }
-    }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) {

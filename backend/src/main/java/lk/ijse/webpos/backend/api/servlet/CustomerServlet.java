@@ -22,21 +22,9 @@ import java.sql.SQLException;
 
 @WebServlet(urlPatterns = "/customer")
 public class CustomerServlet extends HttpServlet {
+
     private static final Logger logger = LoggerFactory.getLogger(CustomerServlet.class);
-
     private final CustomerBO customerBO = (CustomerBO) BOFactory.getBoFactory().getBO(BOFactory.BOTypes.CUSTOMER);
-
-    @Override
-    public void init(ServletConfig config) throws ServletException {
-        try {
-            DirectoryUtil.init();
-            logger.info("CustomerServlet initialized successfully");
-        } catch (IOException e) {
-            logger.error("Error initializing CustomerServlet", e);
-            throw new ServletException("Failed to initialize OrderServlet", e);
-        }
-    }
-
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) {

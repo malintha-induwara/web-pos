@@ -36,17 +36,6 @@ public class ItemServlet extends HttpServlet {
     private final ItemBO itemBO = (ItemBO) BOFactory.getBoFactory().getBO(BOFactory.BOTypes.ITEM);
 
     @Override
-    public void init(ServletConfig config) throws ServletException {
-        try {
-            DirectoryUtil.init();
-            logger.info("ItemServlet initialized successfully");
-        } catch (IOException e) {
-            logger.error("Error initializing ItemServlet", e);
-            throw new ServletException("Failed to initialize OrderServlet", e);
-        }
-    }
-
-    @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) {
         logger.debug("Received POST request for item creation");
         try (PrintWriter writer = resp.getWriter()) {
