@@ -4,11 +4,13 @@ let options = { year: "numeric", month: "long", day: "numeric" };
 let formattedDate = date.toLocaleDateString("en-US", options);
 document.getElementById("current-date").textContent = formattedDate;
 
+let orderId = document.getElementById("order-id");
+
 // Load Customer ids
-async function  populateCustomerDropdown ()  {
+async function populateCustomerDropdown() {
   //Getting data from backend
   try {
-    const response = await fetch("http://localhost:8080/backend/customer"); 
+    const response = await fetch("http://localhost:8080/backend/customer");
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);
     }
@@ -37,7 +39,6 @@ async function  populateCustomerDropdown ()  {
 
 // Load Items
 async function populateOrderItems() {
-
   try {
     const response = await fetch("http://localhost:8080/backend/item");
     if (!response.ok) {
@@ -58,7 +59,6 @@ async function populateOrderItems() {
     itemCard.dataset.itemId = item.item.itemId;
 
     const itemImage = document.createElement("img");
-
 
     let itemObject = itemList.find((itemInList) => {
       return itemInList.item.itemId == item.item.itemId;
@@ -99,20 +99,34 @@ async function populateOrderItems() {
   });
 }
 
-// Add an event listener
-document.getElementById("customerDropDown").addEventListener("change", function () {
-  let selectedCustomerId = this.value;
-  let selectedCustomer = customerList.find(
-    (customer) => customer.customerId === selectedCustomerId
-  );
-  if (selectedCustomer) {
-    document.getElementById("name-holder").textContent =
-      "Name: " + selectedCustomer.firstName;
-  } else {
-    document.getElementById("name-holder").textContent = "Name: ";
+async function loadOrderId() {
+  try {
+    const response = await fetch("http://localhost:8080/backend/order");
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+    const data = await response.json();
+    orderId.textContent = "Order ID: " + data.orderId;
+  } catch (error) {
+    console.error("Error fetching orderId", error);
   }
-});
+}
 
+// Add an event listener
+document
+  .getElementById("customerDropDown")
+  .addEventListener("change", function () {
+    let selectedCustomerId = this.value;
+    let selectedCustomer = customerList.find(
+      (customer) => customer.customerId === selectedCustomerId
+    );
+    if (selectedCustomer) {
+      document.getElementById("name-holder").textContent =
+        "Name: " + selectedCustomer.firstName;
+    } else {
+      document.getElementById("name-holder").textContent = "Name: ";
+    }
+  });
 
 const cart = [];
 
@@ -198,7 +212,9 @@ function updateCartDisplay() {
 
 // Add event listeners to update the cart display when cash or discount inputs change
 document.getElementById("cash").addEventListener("input", updateCartDisplay);
-document.getElementById("discount").addEventListener("input", updateCartDisplay);
+document
+  .getElementById("discount")
+  .addEventListener("input", updateCartDisplay);
 document.getElementById("place-order").addEventListener("click", placeOrder);
 
 function placeOrder() {
@@ -230,8 +246,6 @@ function placeOrder() {
     return;
   }
 
-  
-
   const orderDetails = {
     orderId: document.getElementById("order-id").textContent,
     customer: customer,
@@ -247,15 +261,9 @@ function placeOrder() {
     ),
   };
 
- 
   alert("Order placed successfully!");
 
   //Update the Order ID
-
-  let orderId = document.getElementById("order-id");
-  let currentOrderId = parseInt(orderId.textContent.split(": ")[1]);
-  currentOrderId++;
-  orderId.textContent = "Order ID: " + currentOrderId;
 
   cart.length = 0; // Clear the cart
   document.getElementById("cash").value = "";
