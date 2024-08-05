@@ -13,22 +13,17 @@ public class DirectoryUtil {
     public static final Path LOG_DIRECTORY = Paths.get(HOME_DIRECTORY, "Desktop", "webPos", "logs");
     private static final Path POS_DIRECTORY = Paths.get(HOME_DIRECTORY, "Desktop", "webPos");
 
-    public static void init() {
+    public static void init() throws IOException {
         List<Path> pathsToCreate = Arrays.asList(POS_DIRECTORY, IMAGE_DIRECTORY, LOG_DIRECTORY);
         for (Path path : pathsToCreate) {
             createDirectory(path);
         }
     }
 
-    private static void createDirectory(Path path) {
-        try {
+    private static void createDirectory(Path path) throws IOException {
             if (!Files.exists(path)) {
                 Files.createDirectories(path);
             }
-        } catch (IOException e) {
-            System.err.println("An error occurred while creating directory " + path.getFileName() + ":");
-            e.printStackTrace();
-        }
     }
 }
 

@@ -36,7 +36,11 @@ public class ItemServlet extends HttpServlet {
 
     @Override
     public void init(ServletConfig config){
-        DirectoryUtil.init();
+        try {
+            DirectoryUtil.init();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override
