@@ -23,6 +23,23 @@ public class OrderBOImpl implements OrderBO {
 
 
     @Override
+    public String getOrderId() throws SQLException {
+        try (Connection connection = SQLUtil.getConnection()) {
+            orderDAO.setConnection(connection);
+            String lastOrderId = orderDAO.getId();
+            if (lastOrderId != null){
+                String prefix = lastOrderId.substring(0, 1);
+                int number = Integer.parseInt(lastOrderId.substring(1));
+                number++;
+                String formattedNumber = String.format("%03d", number);
+                return prefix + formattedNumber;
+            }
+            return "O001";
+        }
+    }
+
+
+    @Override
     public boolean placeOrder(OrderDTO order) throws SQLException {
         try (Connection connection = SQLUtil.getConnection()) {
             //Set Connections
@@ -31,10 +48,10 @@ public class OrderBOImpl implements OrderBO {
             orderDetailDAO.setConnection(connection);
             itemDAO.setConnection(connection);
             //Save In the Order Table
-            if (saveOrder(order) && saveOrderDetails(order.getOrderId(), order.getOrderDetails()) && updateItems(order.getOrderDetails())){
+            if (saveOrder(order) && saveOrderDetails(order.getOrderId(), order.getOrderDetails()) && updateItems(order.getOrderDetails())) {
                 connection.commit();
                 return true;
-            }else {
+            } else {
                 connection.rollback();
             }
             connection.setAutoCommit(true);
