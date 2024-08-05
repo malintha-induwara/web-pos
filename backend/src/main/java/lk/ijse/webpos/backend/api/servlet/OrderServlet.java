@@ -2,6 +2,7 @@ package lk.ijse.webpos.backend.api.servlet;
 
 import jakarta.json.bind.Jsonb;
 import jakarta.json.bind.JsonbBuilder;
+import jakarta.servlet.ServletConfig;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -10,6 +11,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import lk.ijse.webpos.backend.bo.BOFactory;
 import lk.ijse.webpos.backend.bo.custom.OrderBO;
 import lk.ijse.webpos.backend.dto.OrderDTO;
+import lk.ijse.webpos.backend.util.DirectoryUtil;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -23,6 +25,11 @@ public class OrderServlet extends HttpServlet {
 
     OrderBO orderBO = (OrderBO) BOFactory.getBoFactory().getBO(BOFactory.BOTypes.ORDER);
 
+
+    @Override
+    public void init(ServletConfig config){
+        DirectoryUtil.init();
+    }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp)  {

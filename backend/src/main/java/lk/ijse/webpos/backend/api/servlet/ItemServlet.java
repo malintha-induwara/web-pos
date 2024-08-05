@@ -3,6 +3,7 @@ package lk.ijse.webpos.backend.api.servlet;
 
 import jakarta.json.bind.Jsonb;
 import jakarta.json.bind.JsonbBuilder;
+import jakarta.servlet.ServletConfig;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.MultipartConfig;
 import jakarta.servlet.annotation.WebServlet;
@@ -13,7 +14,7 @@ import jakarta.servlet.http.Part;
 import lk.ijse.webpos.backend.bo.BOFactory;
 import lk.ijse.webpos.backend.bo.custom.ItemBO;
 import lk.ijse.webpos.backend.dto.ItemDTO;
-
+import lk.ijse.webpos.backend.util.DirectoryUtil;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.nio.file.Files;
@@ -28,7 +29,13 @@ public class ItemServlet extends HttpServlet {
 
     private final ItemBO itemBO = (ItemBO) BOFactory.getBoFactory().getBO(BOFactory.BOTypes.ITEM);
 
-    private static final String UPLOAD_DIR = "/home/syrex/Desktop/imageSave/";
+    private static final String UPLOAD_DIR = DirectoryUtil.IMAGE_DIRECTORY.toString();
+
+
+    @Override
+    public void init(ServletConfig config){
+        DirectoryUtil.init();
+    }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) {
