@@ -3,7 +3,6 @@ package lk.ijse.webpos.backend.api.servlet;
 
 import jakarta.json.bind.Jsonb;
 import jakarta.json.bind.JsonbBuilder;
-import jakarta.servlet.ServletConfig;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.MultipartConfig;
 import jakarta.servlet.annotation.WebServlet;
@@ -11,10 +10,10 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.Part;
+import lk.ijse.webpos.backend.api.initializer.ApplicationInitializer;
 import lk.ijse.webpos.backend.bo.BOFactory;
 import lk.ijse.webpos.backend.bo.custom.ItemBO;
 import lk.ijse.webpos.backend.dto.ItemDTO;
-import lk.ijse.webpos.backend.util.DirectoryUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -32,7 +31,7 @@ import java.util.*;
 public class ItemServlet extends HttpServlet {
 
     private static final Logger logger = LoggerFactory.getLogger(ItemServlet.class);
-    private static final String UPLOAD_DIR = DirectoryUtil.IMAGE_DIRECTORY + File.separator;
+    private static final String UPLOAD_DIR = ApplicationInitializer.IMAGE_DIRECTORY + File.separator;
     private final ItemBO itemBO = (ItemBO) BOFactory.getBoFactory().getBO(BOFactory.BOTypes.ITEM);
 
     @Override
