@@ -15,6 +15,8 @@ import lk.ijse.webpos.backend.bo.BOFactory;
 import lk.ijse.webpos.backend.bo.custom.ItemBO;
 import lk.ijse.webpos.backend.dto.ItemDTO;
 import lk.ijse.webpos.backend.util.DirectoryUtil;
+
+import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.nio.file.Files;
@@ -29,7 +31,7 @@ public class ItemServlet extends HttpServlet {
 
     private final ItemBO itemBO = (ItemBO) BOFactory.getBoFactory().getBO(BOFactory.BOTypes.ITEM);
 
-    private static final String UPLOAD_DIR = DirectoryUtil.IMAGE_DIRECTORY.toString();
+    private static final String UPLOAD_DIR = DirectoryUtil.IMAGE_DIRECTORY.toString()+ File.separator;
 
 
     @Override
