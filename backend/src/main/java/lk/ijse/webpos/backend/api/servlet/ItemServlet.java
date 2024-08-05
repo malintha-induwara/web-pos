@@ -39,13 +39,13 @@ public class ItemServlet extends HttpServlet {
 
 
     @Override
-    public void init(ServletConfig config){
+    public void init(ServletConfig config) throws ServletException {
         try {
             DirectoryUtil.init();
             logger.info("ItemServlet initialized successfully");
         } catch (IOException e) {
             logger.error("Error initializing ItemServlet", e);
-            throw new RuntimeException(e);
+            throw new ServletException("Failed to initialize OrderServlet", e);
         }
     }
 

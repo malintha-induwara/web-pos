@@ -27,15 +27,17 @@ public class CustomerServlet extends HttpServlet {
     private final CustomerBO customerBO = (CustomerBO) BOFactory.getBoFactory().getBO(BOFactory.BOTypes.CUSTOMER);
 
     @Override
-    public void init(ServletConfig config) {
+    public void init(ServletConfig config) throws ServletException {
         try {
             DirectoryUtil.init();
             logger.info("CustomerServlet initialized successfully");
         } catch (IOException e) {
             logger.error("Error initializing CustomerServlet", e);
-            throw new RuntimeException(e);
+            throw new ServletException("Failed to initialize OrderServlet", e);
         }
     }
+
+
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) {
