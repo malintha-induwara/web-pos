@@ -77,7 +77,7 @@ public class OrderBOImpl implements OrderBO {
                     orderId,
                     orderDetailDTO.getItemId(),
                     orderDetailDTO.getQuantity(),
-                    orderDetailDTO.getUntPrice()
+                    orderDetailDTO.getPrice()
             ));
             if (!isSaved) {
                 return false;
