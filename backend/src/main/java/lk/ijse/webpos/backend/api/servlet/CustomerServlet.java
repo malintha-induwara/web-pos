@@ -42,7 +42,6 @@ public class CustomerServlet extends HttpServlet {
             //Validate customer
             List<String> validationErrors= ValidationUtil.validateCustomer(customer);
             if (!validationErrors.isEmpty()) {
-                logger.warn("Validation failed for customer: {}", customer.getCustomerId());
                 resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
                 writer.write("Validation failed: " + String.join(", ", validationErrors));
                 return;

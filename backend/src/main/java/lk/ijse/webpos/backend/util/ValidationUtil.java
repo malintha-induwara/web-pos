@@ -43,7 +43,7 @@ public class ValidationUtil {
     }
 
 
-    private static List<String> validateItem(ItemDTO item) {
+    public static List<String> validateItem(ItemDTO item) {
         List<String> errors = new ArrayList<>();
 
         if (item.getItemId() == null || !item.getItemId().startsWith("I")) {

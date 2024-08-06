@@ -14,6 +14,7 @@ import lk.ijse.webpos.backend.api.initializer.ApplicationInitializer;
 import lk.ijse.webpos.backend.bo.BOFactory;
 import lk.ijse.webpos.backend.bo.custom.ItemBO;
 import lk.ijse.webpos.backend.dto.ItemDTO;
+import lk.ijse.webpos.backend.util.ValidationUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -53,7 +54,16 @@ public class ItemServlet extends HttpServlet {
 
             Jsonb jsonb = JsonbBuilder.create();
             ItemDTO item = jsonb.fromJson(jsonPart.getInputStream(), ItemDTO.class);
-            logger.debug("Attempting to save item: {}", item.getItemId());
+            logger.debug("Attempting to Validate item:");
+
+            //Validate Item
+            List<String> validationErrors= ValidationUtil.validateItem(item);
+            if (!validationErrors.isEmpty()) {
+                resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+                writer.write("Validation failed: " + String.join(", ", validationErrors));
+                return;
+            }
+
 
 
             Part filePart = req.getPart("itemImage");
