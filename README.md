@@ -39,7 +39,7 @@
 * Logback
 * Maven 
 
-## API Endpoints For Testing
+## API Endpoint Documentation
 * **Customer:** https://documenter.getpostman.com/view/33030562/2sA3rxrZNx
 * **Items:** https://documenter.getpostman.com/view/33030562/2sA3rxrZP3
 * **Order:** https://documenter.getpostman.com/view/33030562/2sA3rxrZP4
