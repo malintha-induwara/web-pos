@@ -9,6 +9,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import lk.ijse.webpos.backend.bo.BOFactory;
 import lk.ijse.webpos.backend.bo.custom.OrderBO;
 import lk.ijse.webpos.backend.dto.OrderDTO;
+import lk.ijse.webpos.backend.util.ValidationUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -16,6 +17,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @WebServlet(urlPatterns = "/order")
@@ -36,7 +38,15 @@ public class OrderServlet extends HttpServlet {
 
             Jsonb jsonb = JsonbBuilder.create();
             OrderDTO order = jsonb.fromJson(req.getReader(), OrderDTO.class);
-            logger.debug("Attempting to save order: {}", order.getOrderId());
+            logger.debug("Attempting to validate order");
+
+            // Validate order
+            List<String> validationErrors = ValidationUtil.validateOrder(order);
+            if (!validationErrors.isEmpty()) {
+                resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+                writer.write("Validation failed: " + String.join(", ", validationErrors));
+                return;
+            }
 
             boolean isSaved = orderBO.placeOrder(order);
             if (isSaved) {

@@ -14,6 +14,7 @@ import lk.ijse.webpos.backend.api.initializer.ApplicationInitializer;
 import lk.ijse.webpos.backend.bo.BOFactory;
 import lk.ijse.webpos.backend.bo.custom.ItemBO;
 import lk.ijse.webpos.backend.dto.ItemDTO;
+import lk.ijse.webpos.backend.util.ValidationUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -53,11 +54,26 @@ public class ItemServlet extends HttpServlet {
 
             Jsonb jsonb = JsonbBuilder.create();
             ItemDTO item = jsonb.fromJson(jsonPart.getInputStream(), ItemDTO.class);
-            logger.debug("Attempting to save item: {}", item.getItemId());
+            logger.debug("Attempting to Validate item:");
+
+            //Validate Item
+            List<String> validationErrors= ValidationUtil.validateItem(item);
+            if (!validationErrors.isEmpty()) {
+                resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+                writer.write("Validation failed: " + String.join(", ", validationErrors));
+                return;
+            }
+
 
 
             Part filePart = req.getPart("itemImage");
-            if (filePart != null && filePart.getSize() > 0) {
+            if (filePart == null) {
+                logger.warn("Missing item image in request");
+                resp.sendError(HttpServletResponse.SC_BAD_REQUEST, "Missing Image data");
+                return;
+            }
+
+            if (filePart.getSize() > 0) {
                 String fileName = Paths.get(filePart.getSubmittedFileName()).getFileName().toString();
 
                 //Get the file extension
@@ -82,7 +98,7 @@ public class ItemServlet extends HttpServlet {
                 resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
                 writer.write("Failed to Save Item");
             }
-        } catch (SQLException | IOException | ServletException e) {
+        } catch (Exception e) {
             logger.error("Error processing item creation request", e);
             resp.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
         }
@@ -164,7 +180,16 @@ public class ItemServlet extends HttpServlet {
 
             Jsonb jsonb = JsonbBuilder.create();
             ItemDTO item = jsonb.fromJson(jsonPart.getInputStream(), ItemDTO.class);
-            logger.debug("Attempting to update item: {}", itemId);
+            logger.debug("Attempting to Validate item:");
+
+            //Validate Item
+            List<String> validationErrors= ValidationUtil.validateItem(item);
+            if (!validationErrors.isEmpty()) {
+                resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+                writer.write("Validation failed: " + String.join(", ", validationErrors));
+                return;
+            }
+
 
             Part filePart = req.getPart("itemImage");
             if (filePart != null && filePart.getSize() > 0) {
