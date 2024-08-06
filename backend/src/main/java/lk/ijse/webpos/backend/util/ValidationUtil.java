@@ -72,7 +72,7 @@ public class ValidationUtil {
     public static List<String> validateOrder(OrderDTO order) {
         List<String> errors = new ArrayList<>();
 
-        if (order.getOrderId() == null ||  order.getOrderId().startsWith("O")) {
+        if (order.getOrderId() == null ||  !order.getOrderId().startsWith("O")) {
             errors.add("Order ID must start with 'O' followed by 3 digits");
         }
 
@@ -106,7 +106,7 @@ public class ValidationUtil {
 
     private static List<String> validateOrderDetail(OrderDetailDTO detail, int index) {
             List<String> errors = new ArrayList<>();
-            if (detail.getItemId() == null ||  detail.getItemId().startsWith("I")) {
+            if (detail.getItemId() == null ||  !detail.getItemId().startsWith("I")) {
                 errors.add("Item ID in order detail " + (index + 1) + " must start with 'I' followed by 3 digits");
             }
             if (detail.getQuantity() <= 0) {
