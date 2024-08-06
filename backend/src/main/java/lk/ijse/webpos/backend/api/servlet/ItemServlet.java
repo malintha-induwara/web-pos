@@ -57,7 +57,13 @@ public class ItemServlet extends HttpServlet {
 
 
             Part filePart = req.getPart("itemImage");
-            if (filePart != null && filePart.getSize() > 0) {
+            if (filePart == null) {
+                logger.warn("Missing item image in request");
+                resp.sendError(HttpServletResponse.SC_BAD_REQUEST, "Missing Image data");
+                return;
+            }
+
+            if (filePart.getSize() > 0) {
                 String fileName = Paths.get(filePart.getSubmittedFileName()).getFileName().toString();
 
                 //Get the file extension

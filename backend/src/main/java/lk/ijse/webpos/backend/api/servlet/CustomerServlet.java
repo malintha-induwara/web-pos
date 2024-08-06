@@ -9,12 +9,14 @@ import jakarta.servlet.http.HttpServletResponse;
 import lk.ijse.webpos.backend.bo.BOFactory;
 import lk.ijse.webpos.backend.bo.custom.CustomerBO;
 import lk.ijse.webpos.backend.dto.CustomerDTO;
+import lk.ijse.webpos.backend.util.ValidationUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
+import java.util.List;
 
 
 @WebServlet(urlPatterns = "/customer")
@@ -35,7 +37,6 @@ public class CustomerServlet extends HttpServlet {
 
             Jsonb jsonb = JsonbBuilder.create();
             CustomerDTO customer = jsonb.fromJson(req.getReader(), CustomerDTO.class);
-            logger.debug("Attempting to save customer: {}", customer);
 
             boolean isSaved = customerBO.saveCustomer(customer);
             if (isSaved) {
