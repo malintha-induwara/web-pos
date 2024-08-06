@@ -108,6 +108,15 @@ public class CustomerServlet extends HttpServlet {
             Jsonb jsonb = JsonbBuilder.create();
             CustomerDTO customerDTO = jsonb.fromJson(req.getReader(), CustomerDTO.class);
             boolean isUpdated = customerBO.updateCustomer(customerId, customerDTO);
+            logger.debug("Attempting to Validate customer:");
+
+            List<String> validationErrors= ValidationUtil.validateCustomer(customerDTO);
+            if (!validationErrors.isEmpty()) {
+                resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+                writer.write("Validation failed: " + String.join(", ", validationErrors));
+                return;
+            }
+
 
             if (isUpdated) {
                 logger.info("Customer updated successfully: {}", customerId);

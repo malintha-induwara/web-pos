@@ -98,7 +98,7 @@ public class ItemServlet extends HttpServlet {
                 resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
                 writer.write("Failed to Save Item");
             }
-        } catch (SQLException | IOException | ServletException e) {
+        } catch (Exception e) {
             logger.error("Error processing item creation request", e);
             resp.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
         }
@@ -180,7 +180,16 @@ public class ItemServlet extends HttpServlet {
 
             Jsonb jsonb = JsonbBuilder.create();
             ItemDTO item = jsonb.fromJson(jsonPart.getInputStream(), ItemDTO.class);
-            logger.debug("Attempting to update item: {}", itemId);
+            logger.debug("Attempting to Validate item:");
+
+            //Validate Item
+            List<String> validationErrors= ValidationUtil.validateItem(item);
+            if (!validationErrors.isEmpty()) {
+                resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+                writer.write("Validation failed: " + String.join(", ", validationErrors));
+                return;
+            }
+
 
             Part filePart = req.getPart("itemImage");
             if (filePart != null && filePart.getSize() > 0) {
