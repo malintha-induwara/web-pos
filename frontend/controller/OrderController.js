@@ -135,8 +135,6 @@ customerElement.addEventListener("change", function () {
   }
 });
 
-const cart = [];
-
 function addItemToCart(item, itemCountElement) {
   const itemCount = parseInt(itemCountElement.dataset.quantity, 10);
 
