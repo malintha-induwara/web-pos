@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SYREX Restrurent</title>
+    <link rel="stylesheet" href="/assets/css/body.css" />
+    <link rel="stylesheet" href="/assets/css/order.css" />
+    <link rel="stylesheet" href="/assets/css/customer.css" />
+    <link rel="stylesheet" href="/assets/css/item.css" />
+    <link rel="stylesheet" href="/assets/css/home.css" />
+  </head>
+  <body>
+    <!-- Nav Bar -->
+    <aside>
+      <div class="logo">
+        <img src="/assets/images/icons8-logo-50.png" alt="logo" />
+        <h4 class="logo-text">POS Food</h4>
+      </div>
+
+      <nav class="nav-bar">
+        <button id="home-button" class="nav-button">
+          <img
+            src="/assets/images/icons8-home-64.png"
+            class="nav-button-img"
+            alt="home"
+          />
+          <h4 class="nav-button-text">Home</h4>
+        </button>
+
+        <button id="order-button" class="nav-button">
+          <img
+            src="/assets/images/icons8-menu-50.png"
+            class="nav-button-img"
+            alt="Order"
+          />
+          <h4 class="nav-button-text">Order</h4>
+        </button>
+
+        <button id="customer-button" class="nav-button">
+          <img
+            src="/assets/images/icons8-customer-50.png"
+            class="nav-button-img"
+            alt="customer"
+          />
+          <h4 class="nav-button-text">Customer</h4>
+        </button>
+
+        <button id="item-button" class="nav-button">
+          <img
+            src="/assets/images/icons8-item-50.png"
+            class="nav-button-img"
+            alt="home"
+          />
+          <h4 class="nav-button-text">Item</h4>
+        </button>
+      </nav>
+    </aside>
+
+    <!-- Home Page -->
+
+    <section id="home-page" class="home-section-background">
+      <h1 class="home-page-brand-name">SYREX</h1>
+      <h2 class="home-page-restrurent">RESTRURENT</h2>
+      <h5 class="home-page-text"><i> --- Free Home Dilivery ---</i></h5>
+    </section>
+
+    <!-- Order Page -->
+
+    <section id="order-page" class="order-section-background">
+      <div class="order-section">
+        <h2 class="order-title">SYREX Restrurent</h2>
+
+        <div class="order-items" id="order-items"></div>
+      </div>
+
+      <div class="cart-section">
+        <div class="title-customerButton-container">
+          <h2 class="order-title">Order</h2>
+          <h4 id="current-date" class="date">May 21, 2024</h4>
+          <!-- <button class="customer-button">Add Customer</button> -->
+        </div>
+        <h3 id="order-id">Order ID: 1</h3>
+        <div class="customer-select-container">
+          <select id="customerDropDown" class="customer-select">
+            <option value="">Select Customer</option>
+          </select>
+          <p id="name-holder">Name:</p>
+        </div>
+
+        <div class="order-item-cart">
+          <div class="cart-items" id="cart-items">
+            <!-- Order items will be injected here by JavaScript -->
+          </div>
+          <div class="order-total">
+            <p>Sub Total: <span id="sub-total">Rs0.00</span></p>
+            <p>Total: <span id="total">Rs0.00</span></p>
+            <p>Balance : <span id="balance">Rs0.00</span></p>
+          </div>
+
+          <div class="order-row">
+            <div>
+              <label for="cash"> Cash</label>
+              <input type="text" id="cash" />
+            </div>
+            <div>
+              <label for="discount">Discount</label>
+              <input type="text" id="discount" />
+            </div>
+          </div>
+          <button id="place-order">Place Order</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Customer Page -->
+
+    <section id="customer-page" class="customer-section-background">
+      <div class="customer-section">
+        <h2 class="order-title">Customer Manage</h2>
+        <button id="add-customer" class="customer-button">Add Customer</button>
+      </div>
+      <table class="customer-table">
+        <thead>
+          <tr>
+            <th>Customer ID</th>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>Date of Birth</th>
+            <th>Address</th>
+            <th>Mobile</th>
+            <th>Update</th>
+            <th>Remove</th>
+          </tr>
+        </thead>
+        <tbody id="customer-table-list">
+          <!-- JavaScript will inject rows here -->
+        </tbody>
+      </table>
+
+      <!-- Customer Modal -->
+      <div id="customer-modal" class="customer-modal">
+        <div class="customer-modal-content">
+          <span id="customer-modal-close" class="customer-close">&times;</span>
+          <h2>Add Customer</h2>
+          <form id="customer-form" class="customer-form">
+            <div class="customer-form-row">
+              <label for="customerID">Customer ID:</label>
+              <input type="text" id="customerID" name="customerID" required />
+            </div>
+            <div class="customer-form-row">
+              <label for="firstName">First Name:</label>
+              <input type="text" id="firstName" name="firstName" required />
+            </div>
+            <div class="customer-form-row">
+              <label for="lastName">Last Name:</label>
+              <input type="text" id="lastName" name="lastName" required />
+            </div>
+            <div class="customer-form-row">
+              <label for="dob">Date Of Birth:</label>
+              <input type="date" id="dob" name="dob" required />
+            </div>
+            <div class="customer-form-row">
+              <label for="address">Address:</label>
+              <input type="text" id="address" name="address" required />
+            </div>
+            <div class="customer-form-row">
+              <label for="mobile">Mobile:</label>
+              <input type="tel" id="mobile" name="mobile" required />
+            </div>
+            <button id="customer-submit" type="submit">Add Customer</button>
+          </form>
+        </div>
+      </div>
+    </section>
+
+    <!-- Item Page -->
+    <section id="item-page" class="item-section-background">
+      <div class="item-section">
+        <h2 class="order-title">Item Inventory</h2>
+        <button id="add-item" class="item-button">Add Item</button>
+      </div>
+      <table class="item-table">
+        <thead>
+          <tr>
+            <th>Item ID</th>
+            <th>Item Name</th>
+            <th>Price</th>
+            <th>Quantity</th>
+            <th>Category</th>
+            <th>Image</th>
+            <th>Update</th>
+            <th>Remove</th>
+          </tr>
+        </thead>
+        <tbody id="item-table-list">
+          <!-- JavaScript will inject rows here -->
+        </tbody>
+      </table>
+      <script src="/controller/"></script>
+
+      <!-- Item Model -->
+
+      <div id="item-modal" class="item-modal">
+        <div class="item-modal-content">
+          <span id="item-modal-close" class="item-close">&times;</span>
+          <h2>Add Item</h2>
+          <form id="item-form" class="item-form">
+            <div class="item-form-row">
+              <label for="itemId">Item ID:</label>
+              <input type="text" id="itemId" name="itemId" required />
+            </div>
+            <div class="item-form-row">
+              <label for="itemName">Name:</label>
+              <input type="text" id="itemName" name="itemName" required />
+            </div>
+            <div class="item-form-row">
+              <label for="itemPrice">Item Price:</label>
+              <input type="text" id="itemPrice" name="itemPrice" required />
+            </div>
+            <div class="item-form-row">
+              <label for="itemQty">Item Quantity:</label>
+              <input type="text" id="itemQty" name="itemQty" required />
+            </div>
+            <div class="item-form-row">
+              <label for="itemCategory">Category:</label>
+              <input type="text" id="category" name="itemCategory" required />
+            </div>
+            <div class="item-form-row-image">
+              <label for="image">Image:</label>
+              <div class="image-input"></div>
+              <input type="file" id="input-image" style="display: none" />
+            </div>
+            <button id="item-submit" type="submit">Add Item</button>
+          </form>
+        </div>
+      </div>
+    </section>
+
+    <script src="/db/db.js"></script>
+    <script src="/controller/CustomerController.js"></script>
+    <script src="/controller/ItemController.js"></script>
+    <script src="/controller/OrderController.js"></script>
+    <script src="/controller/Navigation.js"></script>
+  </body>
+</html>

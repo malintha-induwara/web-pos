@@ -23,6 +23,26 @@
 * **Modern UI:** Enjoy a sleek and responsive design that works well on various devices.
 
 ## Built with
+
+### Front End
+
 * HTML
 * CSS
 * Javascript
+
+### Back End
+
+* Java JDK 17
+* Jakartha EE
+* Tomcat 10.1.24
+* Mysql
+* Logback
+* Maven 
+
+## API Endpoint Documentation
+* **Customer:** https://documenter.getpostman.com/view/33030562/2sA3rxrZNx
+* **Items:** https://documenter.getpostman.com/view/33030562/2sA3rxrZP3
+* **Order:** https://documenter.getpostman.com/view/33030562/2sA3rxrZP4
+* **Order Detail:** https://documenter.getpostman.com/view/33030562/2sA3rxrZP5
+
+  
