@@ -40,9 +40,10 @@
 * Maven 
 
 ## API Endpoint Documentation
-* **Customer:** https://documenter.getpostman.com/view/33030562/2sA3rxrZNx
-* **Items:** https://documenter.getpostman.com/view/33030562/2sA3rxrZP3
-* **Order:** https://documenter.getpostman.com/view/33030562/2sA3rxrZP4
-* **Order Detail:** https://documenter.getpostman.com/view/33030562/2sA3rxrZP5
+* You can find the API documentation for this project here [API Documentation](https://documenter.getpostman.com/view/33030562/2sA3rxrZNx).
+
+## License
+* This project is licensed under the MIT License - see the [MIT License](LICENSE) file for details.
+
 
   
